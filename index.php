@@ -15,6 +15,7 @@
 
 	$page_security = 'SA_OPEN';
 	ini_set('xdebug.auto_trace',1);
+    
 	include_once("includes/session.inc");
 
 	add_access_extensions();
