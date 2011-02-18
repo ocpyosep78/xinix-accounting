@@ -1,5 +1,7 @@
 <?php
+    $path_to_root="/xinix-accounting";
     $theme_url = "$path_to_root/themes/$def_theme";
+    include_once($theme_url.'/mobile_helper.php');
 ?>
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  dir="<?php echo $rtl ?>">
@@ -15,7 +17,7 @@
                 <div class="min-width">
                     <form method="POST" action="mobile_show_list_journal.php">
                         <button type="submit" name="repJournal" id="repJournal" value="Display: List of Journal Entries">
-                            <img src="http://localhost/xinix-accounting/themes/default/images/ok.gif" height="12" />
+                            <img src="<?php echo $theme_url; ?>default/images/ok.gif" height="12" />
                             <span>Display: List of Journal Entries</span>
                         </button>
                         <br/><br/>
@@ -23,14 +25,14 @@
                         <br/>
                         <input type="text" name="start_date" value="<?php echo date("m/d/Y"); ?>"/>
                         <a href="javascript:date_picker(document.forms[0].start_date);">
-                            <img src="http://localhost/xinix-accounting/themes/default/images/cal.gif" width="16" height="16" border="0" alt="Click here to pick up the date"/>
+                            <img src="<?php echo $theme_url; ?>default/images/cal.gif" width="16" height="16" border="0" alt="Click here to pick up the date"/>
                         </a>
                         <br/><br/>
                         End Date:
                         <br/>
                         <input type="text" name="end_date" value="<?php echo date("m/d/Y"); ?>"/>
                         <a href="javascript:date_picker(document.forms[0].end_date);">
-                            <img src="http://localhost/xinix-accounting/themes/default/images/cal.gif" width="16" height="16" border="0" alt="Click here to pick up the date"/>
+                            <img src="<?php echo $theme_url; ?>default/images/cal.gif" width="16" height="16" border="0" alt="Click here to pick up the date"/>
                         </a>
                         <br/><br/>
                         Type:
