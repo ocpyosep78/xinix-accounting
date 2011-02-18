@@ -1,0 +1,7 @@
+[18-Feb-2011 13:06:39] 0:admin:class.pdf.inc:63: Declaration of Cpdf::ellipse() should be compatible with that of TCPDF::Ellipse()
+[18-Feb-2011 13:06:39] 0:admin:pdf_report.inc:19: Declaration of FrontReport::Line() should be compatible with that of Cpdf::line()
+[18-Feb-2011 13:06:39] 0:admin:pdf_report.inc:19: Declaration of FrontReport::SetDrawColor() should be compatible with that of TCPDF::SetDrawColor()
+[18-Feb-2011 13:06:39] 0:admin:pdf_report.inc:19: Declaration of FrontReport::SetFillColor() should be compatible with that of TCPDF::SetFillColor()
+[18-Feb-2011 13:06:39] 0:admin:pdf_report.inc:19: Declaration of FrontReport::SetTextColor() should be compatible with that of TCPDF::SetTextColor()
+[18-Feb-2011 13:06:39] 0:admin:tcpdf.php:4509: Function set_magic_quotes_runtime() is deprecated
+[18-Feb-2011 13:06:39] 0:admin:tcpdf.php:4539: Function set_magic_quotes_runtime() is deprecated

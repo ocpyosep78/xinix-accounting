@@ -1,0 +1,2338 @@
+-- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (i486)
+--
+-- Host: localhost    Database: frontaccount
+-- ------------------------------------------------------
+-- Server version	5.1.41-3ubuntu12.8
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `0_areas`
+--
+
+DROP TABLE IF EXISTS `0_areas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_areas` (
+  `area_code` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(60) NOT NULL DEFAULT '',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`area_code`),
+  UNIQUE KEY `description` (`description`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_areas`
+--
+
+LOCK TABLES `0_areas` WRITE;
+/*!40000 ALTER TABLE `0_areas` DISABLE KEYS */;
+INSERT INTO `0_areas` VALUES (1,'Global',0);
+/*!40000 ALTER TABLE `0_areas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_attachments`
+--
+
+DROP TABLE IF EXISTS `0_attachments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_attachments` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `description` varchar(60) NOT NULL DEFAULT '',
+  `type_no` int(11) NOT NULL DEFAULT '0',
+  `trans_no` int(11) NOT NULL DEFAULT '0',
+  `unique_name` varchar(60) NOT NULL DEFAULT '',
+  `tran_date` date NOT NULL DEFAULT '0000-00-00',
+  `filename` varchar(60) NOT NULL DEFAULT '',
+  `filesize` int(11) NOT NULL DEFAULT '0',
+  `filetype` varchar(60) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `type_no` (`type_no`,`trans_no`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_attachments`
+--
+
+LOCK TABLES `0_attachments` WRITE;
+/*!40000 ALTER TABLE `0_attachments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_attachments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_audit_trail`
+--
+
+DROP TABLE IF EXISTS `0_audit_trail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_audit_trail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `trans_no` int(11) unsigned NOT NULL DEFAULT '0',
+  `user` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `description` varchar(60) DEFAULT NULL,
+  `fiscal_year` int(11) NOT NULL,
+  `gl_date` date NOT NULL DEFAULT '0000-00-00',
+  `gl_seq` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fiscal_year` (`fiscal_year`,`gl_seq`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_audit_trail`
+--
+
+LOCK TABLES `0_audit_trail` WRITE;
+/*!40000 ALTER TABLE `0_audit_trail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_audit_trail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_bank_accounts`
+--
+
+DROP TABLE IF EXISTS `0_bank_accounts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_bank_accounts` (
+  `account_code` varchar(11) NOT NULL DEFAULT '',
+  `account_type` smallint(6) NOT NULL DEFAULT '0',
+  `bank_account_name` varchar(60) NOT NULL DEFAULT '',
+  `bank_account_number` varchar(100) NOT NULL DEFAULT '',
+  `bank_name` varchar(60) NOT NULL DEFAULT '',
+  `bank_address` tinytext,
+  `bank_curr_code` char(3) NOT NULL DEFAULT '',
+  `dflt_curr_act` tinyint(1) NOT NULL DEFAULT '0',
+  `id` smallint(6) NOT NULL AUTO_INCREMENT,
+  `last_reconciled_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ending_reconcile_balance` double NOT NULL DEFAULT '0',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `bank_account_name` (`bank_account_name`),
+  KEY `bank_account_number` (`bank_account_number`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_bank_accounts`
+--
+
+LOCK TABLES `0_bank_accounts` WRITE;
+/*!40000 ALTER TABLE `0_bank_accounts` DISABLE KEYS */;
+INSERT INTO `0_bank_accounts` VALUES ('11112111',1,'Bank IDR','123456789','IDR','Indonesia','IDR',1,3,'0000-00-00 00:00:00',0,0);
+/*!40000 ALTER TABLE `0_bank_accounts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_bank_trans`
+--
+
+DROP TABLE IF EXISTS `0_bank_trans`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_bank_trans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` smallint(6) DEFAULT NULL,
+  `trans_no` int(11) DEFAULT NULL,
+  `bank_act` varchar(11) DEFAULT NULL,
+  `ref` varchar(40) DEFAULT NULL,
+  `trans_date` date NOT NULL DEFAULT '0000-00-00',
+  `amount` double DEFAULT NULL,
+  `dimension_id` int(11) NOT NULL DEFAULT '0',
+  `dimension2_id` int(11) NOT NULL DEFAULT '0',
+  `person_type_id` int(11) NOT NULL DEFAULT '0',
+  `person_id` tinyblob,
+  `reconciled` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `bank_act` (`bank_act`,`ref`),
+  KEY `type` (`type`,`trans_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_bank_trans`
+--
+
+LOCK TABLES `0_bank_trans` WRITE;
+/*!40000 ALTER TABLE `0_bank_trans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_bank_trans` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_bom`
+--
+
+DROP TABLE IF EXISTS `0_bom`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_bom` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent` char(20) NOT NULL DEFAULT '',
+  `component` char(20) NOT NULL DEFAULT '',
+  `workcentre_added` int(11) NOT NULL DEFAULT '0',
+  `loc_code` char(5) NOT NULL DEFAULT '',
+  `quantity` double NOT NULL DEFAULT '1',
+  PRIMARY KEY (`parent`,`component`,`workcentre_added`,`loc_code`),
+  KEY `component` (`component`),
+  KEY `id` (`id`),
+  KEY `loc_code` (`loc_code`),
+  KEY `parent` (`parent`,`loc_code`),
+  KEY `Parent_2` (`parent`),
+  KEY `workcentre_added` (`workcentre_added`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_bom`
+--
+
+LOCK TABLES `0_bom` WRITE;
+/*!40000 ALTER TABLE `0_bom` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_bom` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_budget_trans`
+--
+
+DROP TABLE IF EXISTS `0_budget_trans`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_budget_trans` (
+  `counter` int(11) NOT NULL AUTO_INCREMENT,
+  `type` smallint(6) NOT NULL DEFAULT '0',
+  `type_no` bigint(16) NOT NULL DEFAULT '1',
+  `tran_date` date NOT NULL DEFAULT '0000-00-00',
+  `account` varchar(11) NOT NULL DEFAULT '',
+  `memo_` tinytext NOT NULL,
+  `amount` double NOT NULL DEFAULT '0',
+  `dimension_id` int(11) DEFAULT '0',
+  `dimension2_id` int(11) DEFAULT '0',
+  `person_type_id` int(11) DEFAULT NULL,
+  `person_id` tinyblob,
+  PRIMARY KEY (`counter`),
+  KEY `Type_and_Number` (`type`,`type_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_budget_trans`
+--
+
+LOCK TABLES `0_budget_trans` WRITE;
+/*!40000 ALTER TABLE `0_budget_trans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_budget_trans` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_chart_class`
+--
+
+DROP TABLE IF EXISTS `0_chart_class`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_chart_class` (
+  `cid` int(11) NOT NULL DEFAULT '0',
+  `class_name` varchar(60) NOT NULL DEFAULT '',
+  `ctype` tinyint(1) NOT NULL DEFAULT '0',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`cid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_chart_class`
+--
+
+LOCK TABLES `0_chart_class` WRITE;
+/*!40000 ALTER TABLE `0_chart_class` DISABLE KEYS */;
+INSERT INTO `0_chart_class` VALUES (1,'AKTIVA',1,0),(2,'HUTANG',2,0),(3,'MODAL &amp; LABA DITAHAN',3,0),(4,'PENDAPATAN',4,0),(5,'HARGA POKOK PENJUALAN',5,0),(6,'BIAYA',6,0),(7,'PENDAPATAN DAN BIAYA LAINNYA',6,0);
+/*!40000 ALTER TABLE `0_chart_class` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_chart_master`
+--
+
+DROP TABLE IF EXISTS `0_chart_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_chart_master` (
+  `account_code` varchar(11) NOT NULL DEFAULT '',
+  `account_code2` varchar(11) DEFAULT '',
+  `account_name` varchar(60) NOT NULL DEFAULT '',
+  `account_type` int(11) NOT NULL DEFAULT '0',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`account_code`),
+  KEY `account_code` (`account_code`),
+  KEY `account_name` (`account_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_chart_master`
+--
+
+LOCK TABLES `0_chart_master` WRITE;
+/*!40000 ALTER TABLE `0_chart_master` DISABLE KEYS */;
+INSERT INTO `0_chart_master` VALUES ('11111110','','Kas Kantor',11111100,0),('11111120','','Kas Gudang',11111100,0),('11111121','','Kas BON',11111100,0),('11111210','','Kas USD',11111200,0),('11111220','','Kas EUR',11111200,0),('11111990','','Pos Silang Kas',11110000,0),('11112111','','Bank IDR - 1 - Asset',11112110,0),('11112112','','Bank IDR - 1 - Dalam Transit',11112110,0),('11112211','','Bank Valas - 1 - Asset',11112210,0),('11112212','','Bank Valas - 1 - Dalam Transit',11112210,0),('11113110','','Deposito (IDR) - Satu Bulan',11113100,0),('11113120','','Deposito (IDR) - s/d Tiga Bulan',11113100,0),('11113210','','Deposito (USD) - Satu Bulan',11113200,0),('11113220','','Deposito (USD) - s/d Tiga Bulan',11113200,0),('11119010','','Penerimaan Belum Dialokasi BANK IDR - 1',11119000,0),('11119020','','Penerimaan Belum Dialokasi BANK Valas - 1',11119000,0),('11119030','','Penerimaan Tidak Dikenal',11119000,0),('11121100','','Deposito diatas 3 bulan  s/d satu tahun.',11121000,0),('11122100','','Surat berharga s/d satu tahun',11122000,0),('11131110','','Piutang Penjualan Barang',11131100,0),('11131120','','Piutang Penjualan Jasa',11131100,0),('11131130','','Piutang Belum Difaktur',11131100,0),('11139110','','Cadangan Piutang Tak Tertagih - Penjualan Barang',11139100,0),('11139120','','Cadangan Piutang Tak Tertagih - Penjualan Jasa',11139100,0),('11149100','','Piutang Intercompany',11149000,0),('11149200','','Piutang Affiliasi',11149000,0),('11149300','','Piutang Direksi',11149000,0),('11149400','','Piutang Karyawan Lainnya',11149000,0),('11149900','','Piutang Lain-Lain',11149000,0),('11151100','','Persediaan Barang Dagangan',11151000,0),('11151200','','Persediaan Gudang',11151000,0),('11151300','','Persediaan Dalam Transit',11151000,0),('11152100','','Asset Proyek',11152000,0),('11152200','','Asset Proyek WIP',11152000,0),('11161010','','Uang Muka Pembelian',11161000,0),('11163010','','Uang Muka Jaminan Penjualan',11163000,0),('11163900','','Uang Muka Jaminan Lain-Lain',11163000,0),('11169010','','Uang Muka Karyawan',11169000,0),('11171010','','Asuransi Dibayar Di Muka',11171000,0),('11171020','','Sewa Dibayar Di Muka',11171000,0),('11171030','','Bunga Dibayar Di Muka',11171000,0),('11171900','','Biaya Dibayar Di Muka Lainnya',11171000,0),('11172010','','PPN Masukan Dibayar Dimuka',11172000,0),('11172020','','PPN Masukan Yang Ditangguhkan',11172000,0),('11172030','','PPh - psl 22 Dibayar Dimuka',11172000,0),('11172040','','PPh - psl 23 Dibayar Dimuka',11172000,0),('11172050','','PPh - psl 25 Dibayar Dimuka',11172000,0),('11172060','','PPh - psl 29 Dibayar Dimuka',11172000,0),('11172090','','Fiskal Luar Negeri',11172000,0),('11180010','','Biaya Notul Yang Ditangguhkan',11180000,0),('11180030','','Biaya Yang Ditangguhkan Lainnya',11180000,0),('11190010','','Sewa Yang Masih Harus Diterima',11190000,0),('11190900','','Pendapatan Yang Masih Harus Diterima Lainnya',11190000,0),('12101100','','Aktiva Pajak Tangguhan',12100000,0),('12201110','','Deposito (IDR) - Satu Tahun',12201100,0),('12201120','','Deposito (IDR) - Dua Tahun',12201100,0),('12201210','','Deposito (USD) - Satu Tahun',12201200,0),('12201220','','Deposito (USD) - Dua Tahun',12201200,0),('12202110','','Penyertaan Saham',12202000,0),('12311101','','Tanah - Perl Langsung',12311100,0),('12311102','','Bangunan - Perl Langsung',12311100,0),('12311103','','Mesin dan Peralatan - Perl Langsung',12311100,0),('12311104','','Kendaraan - Perl Langsung',12311100,0),('12311105','','Inventaris Kantor - Perl Langsung',12311100,0),('12311106','','Instalasi &amp; Renovasi',12311100,0),('12311201','','Akm. Penys Bangunan - Perl Langsung',12311200,0),('12311202','','Akm. Penys Mesin - Perl Langsung',12311200,0),('12311203','','Akm. Penys Kendaraan - Perl Langsung',12311200,0),('12311204','','Akm. Penys Inventaris - Perl Langsung',12311200,0),('12311205','','Akm. Penys Instalasi &amp; Renovasi',12311200,0),('12312101','','Bangunan - Aktiva Leasing',12312100,0),('12312102','','Mesin dan Peralatan - Aktiva Leasing',12312100,0),('12312103','','Kendaraan - Aktiva Leasing',12312100,0),('12312104','','Inventaris Kantor - Aktiva Leasing',12312100,0),('12312201','','Akm Penys Bangunan - Aktiva Leasing',12312200,0),('12312202','','Akm Penys Mesin dan Peralatan - Aktiva Leasing',12312200,0),('12312203','','Akm Penys Kendaraan - Aktiva Leasing',12312200,0),('12312204','','Akm Penys Inventaris Kantor - Aktiva Leasing',12312200,0),('12313101','','Renovasi Sewa Bangunan Kantor Electric',12313000,0),('12313102','','Bangunan Gudang Dalam Penyelesaian',12313000,0),('12313103','','Sarana &amp; Prasarana Kantor - Dalam Penyelesaian',12313000,0),('12314101','','Tanah - Properti Invenstasi',12314100,0),('12314102','','Bangunan - Properti Invenstasi',12314100,0),('12314103','','Mesin dan Peralatan - Properti Invenstasi',12314100,0),('12314104','','Kendaraan - Properti Invenstasi',12314100,0),('12314105','','Inventaris Kantor - Properti Invenstasi',12314100,0),('12314201','','Akm. Penys Bangunan - Properti Invenstasi',12314200,0),('12314202','','Akm. Penys Mesin dan Peralatan - Properti Invenstasi',12314200,0),('12314203','','Akm. Penys Kendaraan - Properti Invenstasi',12314200,0),('12314204','','Akm. Penys Inventaris - Properti Invenstasi',12314200,0),('12321100','','HAKI',12321000,0),('12321200','','Goodwill',12321000,0),('12901000','','Akta Pendirian &amp; Perizinan',12900000,0),('12902000','','Hak Atas Tanah',12900000,0),('21101010','','Hutang Bank Jangka Pendek',21101000,0),('21102110','','Hutang Dagang',21102100,0),('21102120','','Hutang Jasa',21102100,0),('21102130','','Terima Barang Belum Difaktur',21102100,0),('21102140','','Seleksi Pembayaran',21102100,0),('21103010','','Gaji Yang Masih Harus Dibayar',21103000,0),('21103020','','Komisi Penjualan Yang Masih Harus Dibayar',21103000,0),('21103030','','Bunga Bank Yang Masih Harus Dibayar',21103000,0),('21103040','','Telepon Yang Masih Harus Dibayar',21103000,0),('21103050','','Listrik &amp; Air Yang Masih Harus Dibayar',21103000,0),('21103060','','Asuransi Yang Masih Harus Dibayar',21103000,0),('21103070','','Biaya Impor Yang Masih Harus Dibayar',21103000,0),('21103900','','Biaya Yang Masih harus Dibayar Lainnya',21103000,0),('21104110','','PPN Keluaran',21104100,0),('21104120','','PPN Keluaran Yang Ditangguhkan',21104100,0),('21104190','','WithHolding (Tax)',21104100,0),('21104210','','Hutang PPh psl 21',21104200,0),('21104220','','Hutang PPh psl 23',21104200,0),('21104230','','Hutang PPh psl 25',21104200,0),('21104240','','Hutang PPh psl 26',21104200,0),('21104250','','Hutang PPh psl 29',21104200,0),('21104260','','Hutang PPh Final psl 4 ayat 2',21104200,0),('21105010','','Uang Muka Penjualan',21105000,0),('21105020','','Sewa Diterima Di Muka',21105000,0),('21105030','','Pendapatan Diterima Di Muka Lainnya',21105000,0),('21106100','','Hutang Intercompany',21106000,0),('21106200','','Hutang Affiliasi',21106000,0),('21106300','','Hutang Direksi',21106000,0),('21106900','','Hutang Jangka Pendek Lain-Lain',21106000,0),('21107010','','Hutang Bank Jangka Panjang-Current',21107000,0),('21107020','','Hutang Leasing',21107000,0),('21107030','','Hutang Jgk Pnj yg akan Jt Tempo 1 th Lainnya',21107000,0),('22001000','','Kewajiban Pajak Tangguhan',22000000,0),('22002000','','Kewajiban diestimasi atas Imbalan Kerja',22000000,0),('22003000','','Hutang Bank Jangka Panjang',22000000,0),('22004000','','Hutang Leasing',22000000,0),('22005000','','Hutang Jangka Panjang Lain-Lain',22000000,0),('31011010','','Modal Disetor - Direksi 1',31011000,0),('31011020','','Modal Disetor - Direksi 2',31011000,0),('32021010','','Agio / Disagio - Direksi 1',32021000,0),('32021020','','Agio / Disagio - Direksi 2',32021000,0),('33031010','','Tanah - Penilaian Kembali',33031000,0),('33031020','','Bangunan - Penilaian Kembali',33031000,0),('33031030','','Mesin dan Peralatan - Penilaian Kembali',33031000,0),('33031040','','Kendaraan - Penilaian Kembali',33031000,0),('33031050','','Inventaris Kantor - Penilaian Kembali',33031000,0),('34041010','','Deviden - Direksi 1',34041000,0),('34041020','','Deviden - Direksi 2',34041000,0),('35051010','','Laba / (Rugi) Ditahan',35051000,0),('35051020','','Laba / (Rugi) Berjalan',35051000,0),('41001000','','Penjualan Barang Usaha',41000000,0),('41002000','','Penjualan Jasa Service',41000000,0),('41003000','','Pendapatan Belum Difaktur',41000000,0),('41004000','','Komisi Penjualan',41000000,0),('42001000','','Diskon Penjualan',42000000,0),('44001000','','Retur Penjualan',44000000,0),('51010000','','HPP Produk',50000000,0),('51020000','','Pembelian Jasa',50000000,0),('51030000','','Penyesuaian HPP',50000000,0),('51040000','','Diskon Pembelian',50000000,0),('51050000','','Selisih Persediaan',50000000,0),('51060000','','Penyesuaian Persediaan',50000000,0),('51070000','','Revaluasi Persediaan',50000000,0),('59010000','','Varian Harga Faktur',59000000,0),('59020000','','Varian Harga Beli',59000000,0),('59030000','','Varian Harga Beli Offset',59000000,0),('61101110','','Biaya Gaji Bulanan',61100000,0),('61101120','','Biaya Upah Harian',61100000,0),('61101130','','Biaya Transport Karyawan',61100000,0),('61101140','','Biaya Uang Makan Karyawan',61100000,0),('61101150','','Biaya Pengobatan',61100000,0),('61101160','','Biaya Lembur',61100000,0),('61101170','','Biaya Asuransi / JAMSOSTEK',61100000,0),('61101180','','Biaya THR Karyawan',61100000,0),('61101190','','Biaya Bonus Karyawan',61100000,0),('61101200','','Biaya Tunjangan PPH 21',61100000,0),('61101210','','Biaya Recruitment &amp; Training',61100000,0),('61101900','','Biaya Karyawan Lainnya',61100000,0),('61201110','','Biaya Iklan &amp; Promosi',61200000,0),('61201120','','Biaya Komisi Penjualan Sales',61200000,0),('61201130','','Biaya Komisi Penjualan Customer',61200000,0),('61201140','','Biaya Isentif Penjualan Sales',61200000,0),('61201150','','Biaya Bonus Penjualan Sales',61200000,0),('61201160','','Biaya Entertainment',61200000,0),('61201170','','Biaya Disain',61200000,0),('61201180','','Biaya Sample',61200000,0),('61201190','','Biaya Trucking/Ekspedisi',61200000,0),('61201900','','Biaya Marketing Lain-lain',61200000,0),('61301110','','Biaya Perbaikan &amp; Perawatan Gedung',61300000,0),('61301120','','Biaya Perbaikan &amp; Perawatan Kendaraan',61300000,0),('61301130','','Biaya Perbaikan &amp; Perawatan Mesin',61300000,0),('61301140','','Biaya Perbaikan &amp; Perawatan Inventaris',61300000,0),('61301900','','Biaya Perbaikan &amp; Perawatan Lainnya',61300000,0),('61401110','','Biaya Telepon - Kantor',61400000,0),('61401120','','Biaya Telepon - Gudang',61400000,0),('61401130','','Biaya FAX - Kantor',61400000,0),('61401140','','Biaya Handphone',61400000,0),('61401150','','Biaya Internet',61400000,0),('61401160','','Biaya Information Technology',61400000,0),('61401900','','Biaya Telekomunikasi Lainnya',61400000,0),('61501110','','Biaya Listrik',61500000,0),('61501120','','Biaya Air',61500000,0),('61601110','','Biaya Sewa Kantor',61600000,0),('61601120','','Biaya Sewa Gudang',61600000,0),('61601130','','Biaya Sewa Kendaraan',61600000,0),('61601140','','Biaya Sewa Alat Berat',61600000,0),('61601900','','Biaya Sewa Lainnya',61600000,0),('61701110','','Biaya Perlengkapan',61700000,0),('61701120','','Biaya Konsultan &amp; Audit',61700000,0),('61701130','','Biaya Iuran &amp; Sumbangan',61700000,0),('61701140','','Biaya Alat Tulis',61700000,0),('61701150','','Biaya Pembelian Rumah Tangga',61700000,0),('61701160','','Biaya Pos &amp; Meterai',61700000,0),('61701170','','Biaya Perizinan',61700000,0),('61701180','','Biaya Surat-surat Kendaraan',61700000,0),('61701190','','Biaya Foto Copy, Penjilidan &amp; Cetakan',61700000,0),('61701200','','Biaya Direksi',61700000,0),('61701210','','Biaya Pajak Bumi &amp; Bangunan',61700000,0),('61701900','','Biaya Kantor Lainnya',61700000,0),('61801110','','Biaya Research &amp; Development',61800000,0),('61801120','','Biaya Laboratorium',61800000,0),('61801900','','Biaya R&amp;D Lainnya',61800000,0),('61901110','','Biaya Bahan Bakar Minyak',61900000,0),('61901120','','Biaya Kuli &amp; Bongkar Kontainer',61900000,0),('61901130','','Biaya Tol &amp; Parkir',61900000,0),('61901140','','Biaya Keamanan',61900000,0),('61901150','','Biaya Angkut &amp; Packing',61900000,0),('61901160','','Biaya Meeting',61900000,0),('61901170','','Biaya Rokok',61900000,0),('61901180','','Biaya Langganan Majalah &amp; Koran',61900000,0),('61901190','','Biaya Rekreasi Karyawan',61900000,0),('61901200','','Biaya Perjalanan Dinas DN',61900000,0),('61901210','','Biaya Perjalanan Dinas LN',61900000,0),('61901211','','Biaya Bunga Leasing',61900000,0),('61901900','','Biaya Umum Lain-lain',61900000,0),('62101110','','Biaya Penyusutan Bangunan',62100000,0),('62101120','','Biaya Penyusutan Kendaraan',62100000,0),('62101130','','Biaya Penyusutan Inventaris',62100000,0),('62101140','','Biaya Penyusutan Mesin dan Peralatan',62100000,0),('62201110','','Biaya Amortisasi HAKI',62200000,0),('62201120','','Biaya Amortisasi Goodwill',62200000,0),('70011110','','Pendapatan Buku Kas',70011000,0),('70011120','','Pendapatan Bunga Bank',70011000,0),('70011130','','Pendapatan Selisih Kurs',70011000,0),('70011140','','Taksiran Pendapatan Selisih Kurs',70011000,0),('70011150','','Laba Revaluasi Bank',70011000,0),('70011160','','Penyesuaian Laba Bank',70011000,0),('70011180','','Pendapatan Diskon Pembayaran',70011000,0),('70011900','','Pendapatan Lain-lain',70011000,0),('70021110','','Biaya Buku Kas',70021000,0),('70021120','','Biaya Bunga Bank',70021000,0),('70021130','','Kerugian Selisih Kurs',70021000,0),('70021140','','Taksiran Kerugian Selisih Kurs',70021000,0),('70021150','','Rugi Revaluasi Bank',70021000,0),('70021160','','Penyesuaian Rugi Bank',70021000,0),('70021170','','Biaya Administrasi Bank',70021000,0),('70021180','','Biaya Pembulatan Pembayaran',70021000,0),('70021190','','Selisih Pembulatan Kurs',70021000,0),('70021200','','Cash Discount Penjualan',70021000,0),('70021210','','Biaya Selisih Kas Kecil',70021000,0),('70021220','','Biaya Piutang Tak Tertagih',70021000,0),('70021910','','Pos Default',70021000,0),('70021920','','Suspense Balancing',70021000,0),('70021930','','Suspense Error',70021000,0),('70021990','','Biaya Lainnya',70021000,0),('80001100','','Pajak Penghasilan Badan',80000000,0),('80001200','','Pajak Tangguhan',80000000,0),('90001110','','Ikhtisar Laba / (Rugi) Ditahan',90000000,0),('90001120','','Selisih Koreksi L/R Berjalan',90000000,0),('90001130','','Komitmen PO',90000000,0),('90001140','','Komitmen SO',90000000,0),('90009000','','Offset Saldo Awal',90000000,0);
+/*!40000 ALTER TABLE `0_chart_master` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_chart_types`
+--
+
+DROP TABLE IF EXISTS `0_chart_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_chart_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(60) NOT NULL DEFAULT '',
+  `class_id` tinyint(1) NOT NULL DEFAULT '0',
+  `parent` int(11) NOT NULL DEFAULT '-1',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=90000001 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_chart_types`
+--
+
+LOCK TABLES `0_chart_types` WRITE;
+/*!40000 ALTER TABLE `0_chart_types` DISABLE KEYS */;
+INSERT INTO `0_chart_types` VALUES (11000000,'AKTIVA LANCAR',1,0,0),(11110000,'KAS DAN SETARA KAS',1,11000000,0),(11111000,'KAS',1,11110000,0),(11111100,'Kas IDR',1,11111000,0),(11111200,'KAS VALAS',1,11111000,0),(11112000,'BANK',1,11110000,0),(11112100,'BANK IDR',1,11112000,0),(11112110,'BANK IDR - 1',1,11112100,0),(11112200,'BANK VALAS',1,11112000,0),(11112210,'BANK VALAS - 1',1,11112200,0),(11113000,'DEPOSITO JANGKA PENDEK',1,11110000,0),(11113100,'Deposito IDR',1,11113000,0),(11113200,'Deposito VALAS',1,11113000,0),(11119000,'PENERIMAAN BELUM TERALOKASI',1,11110000,0),(11120000,'INVESTASI JANGKA PENDEK',1,11000000,0),(11121000,'DEPOSITO',1,11120000,0),(11122000,'SURAT-SURAT BERHARGA',1,11120000,0),(11130000,'PIUTANG USAHA',1,11000000,0),(11131100,'PIUTANG USAHA',1,11130000,0),(11139100,'CADANGAN PIUTANG TAK TERTAGIH',1,11130000,0),(11149000,'PIUTANG LAIN-LAIN',1,11000000,0),(11150000,'PERSEDIAAN',1,11000000,0),(11151000,'PERSEDIAAN UNTUK USAHA',1,11150000,0),(11152000,'PERSEDIAAN PROYEK',1,11150000,0),(11160000,'UANG MUKA YANG DIBAYAR',1,11000000,0),(11161000,'UANG MUKA PEMBELIAN',1,11160000,0),(11163000,'UANG MUKA JAMINAN',1,11160000,0),(11169000,'UANG MUKA LAINNYA',1,11160000,0),(11170000,'BIAYA DAN PAJAK DIBAYAR DIMUKA',1,11000000,0),(11171000,'BIAYA DIBAYAR DIMUKA',1,11170000,0),(11172000,'PAJAK DIBAYAR DIMUKA',1,11170000,0),(11180000,'BIAYA YANG DITANGGUHKAN',1,11000000,0),(11190000,'PENDAPATAN YANG MASIH HARUS DITERIMA',1,11000000,0),(12000000,'AKTIVA TIDAK LANCAR',1,0,0),(12100000,'AKTIVA PAJAK TANGGUHAN',1,12000000,0),(12200000,'INVESTASI JANGKA PANJANG',1,12000000,0),(12201000,'DEPOSITO JANGKA PANJANG',1,12200000,0),(12201100,'DEPOSITO (IDR)',1,12201000,0),(12201200,'DEPOSITO (VALAS)',1,12201000,0),(12202000,'PENYERTAAN',1,12200000,0),(12300000,'AKTIVA TETAP',1,12000000,0),(12310000,'AKTIVA TETAP BERWUJUD',1,12300000,0),(12311000,'AKTIVA PEROLEHAN LANGSUNG',1,12310000,0),(12311100,'AKTIVA HARGA PEROLEHAN',1,12311000,0),(12311200,'AKUMULASI PENYUSUTAN AKTIVA TETAP',1,12311000,0),(12312000,'AKTIVA LEASING',1,12310000,0),(12312100,'AKTIVA HARGA PEROLEHAN',1,12312000,0),(12312200,'AKUMULASI PENYUSUTAN AKTIVA LEASING',1,12312000,0),(12313000,'AKTIVA DALAM PENYELESAIAN',1,12310000,0),(12314000,'PROPERTI INVESTASI',1,12310000,0),(12314100,'AKTIVA HARGA PEROLEHAN',1,12314000,0),(12314200,'AKUMULASI PENYUSUTAN AKTIVA LEASING',1,12314000,0),(12320000,'AKTIVA TETAP TIDAK BERWUJUD',1,12314200,0),(12321000,'AKTIVA TIDAK BERWUJUD - HARGA PEROLEHAN',1,12320000,0),(12900000,'AKTIVA TETAP LAINNYA',1,12000000,0),(21000000,'HUTANG JANGKA PENDEK',2,0,0),(21101000,'HUTANG BANK',2,21000000,0),(21102000,'HUTANG USAHA',2,21000000,0),(21102100,'HUTANG USAHA',2,21102000,0),(21103000,'HUTANG BIAYA',2,21000000,0),(21104000,'HUTANG PAJAK',2,21000000,0),(21104100,'HUTANG PPN',2,21104000,0),(21104200,'HUTANG PPh',2,21104000,0),(21105000,'PENDAPATAN DITERIMA DI MUKA',2,21000000,0),(21106000,'HUTANG JANGKA PENDEK LAINNYA',2,21000000,0),(21107000,'HUTANG JANGKA PANJANG YANG AKAN JT TEMPO 1 TH',2,21000000,0),(22000000,'HUTANG JANGKA PANJANG',2,0,0),(31011000,'MODAL DISETOR',3,0,0),(32021000,'AGIO / DISAGIO',3,0,0),(33031000,'PENILAIAN KEMBALI ATAS AKTIVA',3,0,0),(34041000,'DIVIDEN',3,0,0),(35051000,'LABA / (RUGI)',3,0,0),(41000000,'PENJUALAN',4,0,0),(42000000,'DISKON PENJUALAN',4,0,0),(44000000,'RETUR PENJUALAN',4,0,0),(50000000,'HARGA POKOK PENJUALAN',5,0,0),(59000000,'SELISIH HPP',5,0,0),(61000000,'BIAYA OPERATIONAL',6,0,0),(61100000,'BIAYA KARYAWAN',6,61000000,0),(61200000,'BIAYA MARKETING',6,61000000,0),(61300000,'BIAYA PERBAIKAN &amp; PERAWATAN',6,61000000,0),(61400000,'BIAYA FAX &amp; TELEKOMUNIKASI',6,61000000,0),(61500000,'BIAYA LISTRIK &amp; AIR',6,61000000,0),(61600000,'BIAYA SEWA',6,61000000,0),(61700000,'BIAYA KANTOR',6,61000000,0),(61800000,'BIAYA R&amp;D',6,61000000,0),(61900000,'BIAYA UMUM',6,61000000,0),(62000000,'BIAYA PENYUSUTAN &amp; AMORTISASI',6,0,0),(62100000,'BIAYA PENYUSUTAN',6,62000000,0),(62200000,'BIAYA AMORTISASI',6,62000000,0),(70011000,'PENDAPATAN LAIN-LAIN',7,0,0),(70021000,'BIAYA LAIN-LAIN',7,0,0),(80000000,'PAJAK PENGHASILAN',6,0,0),(90000000,'MEMO',6,0,0);
+/*!40000 ALTER TABLE `0_chart_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_comments`
+--
+
+DROP TABLE IF EXISTS `0_comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_comments` (
+  `type` int(11) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL DEFAULT '0',
+  `date_` date DEFAULT '0000-00-00',
+  `memo_` tinytext
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_comments`
+--
+
+LOCK TABLES `0_comments` WRITE;
+/*!40000 ALTER TABLE `0_comments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_company`
+--
+
+DROP TABLE IF EXISTS `0_company`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_company` (
+  `coy_code` int(11) NOT NULL DEFAULT '1',
+  `coy_name` varchar(60) NOT NULL DEFAULT '',
+  `gst_no` varchar(25) NOT NULL DEFAULT '',
+  `coy_no` varchar(25) NOT NULL DEFAULT '0',
+  `tax_prd` int(11) NOT NULL DEFAULT '1',
+  `tax_last` int(11) NOT NULL DEFAULT '1',
+  `postal_address` tinytext NOT NULL,
+  `phone` varchar(30) NOT NULL DEFAULT '',
+  `fax` varchar(30) NOT NULL DEFAULT '',
+  `email` varchar(100) NOT NULL DEFAULT '',
+  `coy_logo` varchar(100) NOT NULL DEFAULT '',
+  `domicile` varchar(55) NOT NULL DEFAULT '',
+  `curr_default` char(3) NOT NULL DEFAULT '',
+  `debtors_act` varchar(11) NOT NULL DEFAULT '',
+  `pyt_discount_act` varchar(11) NOT NULL DEFAULT '',
+  `creditors_act` varchar(11) NOT NULL DEFAULT '',
+  `bank_charge_act` varchar(11) NOT NULL DEFAULT '',
+  `exchange_diff_act` varchar(11) NOT NULL DEFAULT '',
+  `profit_loss_year_act` varchar(11) NOT NULL DEFAULT '',
+  `retained_earnings_act` varchar(11) NOT NULL DEFAULT '',
+  `freight_act` varchar(11) NOT NULL DEFAULT '',
+  `default_sales_act` varchar(11) NOT NULL DEFAULT '',
+  `default_sales_discount_act` varchar(11) NOT NULL DEFAULT '',
+  `default_prompt_payment_act` varchar(11) NOT NULL DEFAULT '',
+  `default_inventory_act` varchar(11) NOT NULL DEFAULT '',
+  `default_cogs_act` varchar(11) NOT NULL DEFAULT '',
+  `default_adj_act` varchar(11) NOT NULL DEFAULT '',
+  `default_inv_sales_act` varchar(11) NOT NULL DEFAULT '',
+  `default_assembly_act` varchar(11) NOT NULL DEFAULT '',
+  `payroll_act` varchar(11) NOT NULL DEFAULT '',
+  `allow_negative_stock` tinyint(1) NOT NULL DEFAULT '0',
+  `po_over_receive` int(11) NOT NULL DEFAULT '10',
+  `po_over_charge` int(11) NOT NULL DEFAULT '10',
+  `default_credit_limit` int(11) NOT NULL DEFAULT '1000',
+  `default_workorder_required` int(11) NOT NULL DEFAULT '20',
+  `default_dim_required` int(11) NOT NULL DEFAULT '20',
+  `past_due_days` int(11) NOT NULL DEFAULT '30',
+  `use_dimension` tinyint(1) DEFAULT '0',
+  `f_year` int(11) NOT NULL DEFAULT '1',
+  `no_item_list` tinyint(1) NOT NULL DEFAULT '0',
+  `no_customer_list` tinyint(1) NOT NULL DEFAULT '0',
+  `no_supplier_list` tinyint(1) NOT NULL DEFAULT '0',
+  `base_sales` int(11) NOT NULL DEFAULT '-1',
+  `foreign_codes` tinyint(1) NOT NULL DEFAULT '0',
+  `accumulate_shipping` tinyint(1) NOT NULL DEFAULT '0',
+  `legal_text` tinytext NOT NULL,
+  `default_delivery_required` smallint(6) NOT NULL DEFAULT '1',
+  `version_id` varchar(11) NOT NULL DEFAULT '',
+  `time_zone` tinyint(1) NOT NULL DEFAULT '0',
+  `add_pct` int(5) NOT NULL DEFAULT '-1',
+  `round_to` int(5) NOT NULL DEFAULT '1',
+  `login_tout` smallint(6) NOT NULL DEFAULT '600',
+  PRIMARY KEY (`coy_code`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_company`
+--
+
+LOCK TABLES `0_company` WRITE;
+/*!40000 ALTER TABLE `0_company` DISABLE KEYS */;
+INSERT INTO `0_company` VALUES (1,'Company name','','',1,1,'N/A','','','','','','IDR','11131110','51040000','21102110','70021170','70011130','35051020','35051010','61201190','41001000','42001000','44001000','11151100','51010000','51060000','41001000','51030000','5000',0,5,5,1000000,20,20,30,1,1,0,0,0,1,0,1,'',1,'2.2',0,-1,1,600);
+/*!40000 ALTER TABLE `0_company` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_credit_status`
+--
+
+DROP TABLE IF EXISTS `0_credit_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_credit_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reason_description` char(100) NOT NULL DEFAULT '',
+  `dissallow_invoices` tinyint(1) NOT NULL DEFAULT '0',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `reason_description` (`reason_description`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_credit_status`
+--
+
+LOCK TABLES `0_credit_status` WRITE;
+/*!40000 ALTER TABLE `0_credit_status` DISABLE KEYS */;
+INSERT INTO `0_credit_status` VALUES (1,'Good History',0,0),(3,'No more work until payment received',1,0),(4,'In liquidation',1,0);
+/*!40000 ALTER TABLE `0_credit_status` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_currencies`
+--
+
+DROP TABLE IF EXISTS `0_currencies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_currencies` (
+  `currency` varchar(60) NOT NULL DEFAULT '',
+  `curr_abrev` char(3) NOT NULL DEFAULT '',
+  `curr_symbol` varchar(10) NOT NULL DEFAULT '',
+  `country` varchar(100) NOT NULL DEFAULT '',
+  `hundreds_name` varchar(15) NOT NULL DEFAULT '',
+  `auto_update` tinyint(1) NOT NULL DEFAULT '1',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`curr_abrev`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_currencies`
+--
+
+LOCK TABLES `0_currencies` WRITE;
+/*!40000 ALTER TABLE `0_currencies` DISABLE KEYS */;
+INSERT INTO `0_currencies` VALUES ('US Dollars','USD','$','United States','Cents',1,0),('Euro','EUR','?','Europe','Cents',1,0),('Rupiah','IDR','Rp','Indonesia','Sen',1,0);
+/*!40000 ALTER TABLE `0_currencies` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_cust_allocations`
+--
+
+DROP TABLE IF EXISTS `0_cust_allocations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_cust_allocations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `amt` double unsigned DEFAULT NULL,
+  `date_alloc` date NOT NULL DEFAULT '0000-00-00',
+  `trans_no_from` int(11) DEFAULT NULL,
+  `trans_type_from` int(11) DEFAULT NULL,
+  `trans_no_to` int(11) DEFAULT NULL,
+  `trans_type_to` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_cust_allocations`
+--
+
+LOCK TABLES `0_cust_allocations` WRITE;
+/*!40000 ALTER TABLE `0_cust_allocations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_cust_allocations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_cust_branch`
+--
+
+DROP TABLE IF EXISTS `0_cust_branch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_cust_branch` (
+  `branch_code` int(11) NOT NULL AUTO_INCREMENT,
+  `debtor_no` int(11) NOT NULL DEFAULT '0',
+  `br_name` varchar(60) NOT NULL DEFAULT '',
+  `branch_ref` varchar(30) NOT NULL DEFAULT '',
+  `br_address` tinytext NOT NULL,
+  `area` int(11) DEFAULT NULL,
+  `salesman` int(11) NOT NULL DEFAULT '0',
+  `phone` varchar(30) NOT NULL DEFAULT '',
+  `phone2` varchar(30) NOT NULL DEFAULT '',
+  `fax` varchar(30) NOT NULL DEFAULT '',
+  `contact_name` varchar(60) NOT NULL DEFAULT '',
+  `email` varchar(100) NOT NULL DEFAULT '',
+  `default_location` varchar(5) NOT NULL DEFAULT '',
+  `tax_group_id` int(11) DEFAULT NULL,
+  `sales_account` varchar(11) DEFAULT NULL,
+  `sales_discount_account` varchar(11) DEFAULT NULL,
+  `receivables_account` varchar(11) DEFAULT NULL,
+  `payment_discount_account` varchar(11) DEFAULT NULL,
+  `default_ship_via` int(11) NOT NULL DEFAULT '1',
+  `disable_trans` tinyint(4) NOT NULL DEFAULT '0',
+  `br_post_address` tinytext NOT NULL,
+  `group_no` int(11) NOT NULL DEFAULT '0',
+  `notes` tinytext NOT NULL,
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`branch_code`,`debtor_no`),
+  KEY `branch_code` (`branch_code`),
+  KEY `br_name` (`br_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_cust_branch`
+--
+
+LOCK TABLES `0_cust_branch` WRITE;
+/*!40000 ALTER TABLE `0_cust_branch` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_cust_branch` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_debtor_trans`
+--
+
+DROP TABLE IF EXISTS `0_debtor_trans`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_debtor_trans` (
+  `trans_no` int(11) unsigned NOT NULL DEFAULT '0',
+  `type` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `version` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `debtor_no` int(11) unsigned DEFAULT NULL,
+  `branch_code` int(11) NOT NULL DEFAULT '-1',
+  `tran_date` date NOT NULL DEFAULT '0000-00-00',
+  `due_date` date NOT NULL DEFAULT '0000-00-00',
+  `reference` varchar(60) NOT NULL DEFAULT '',
+  `tpe` int(11) NOT NULL DEFAULT '0',
+  `order_` int(11) NOT NULL DEFAULT '0',
+  `ov_amount` double NOT NULL DEFAULT '0',
+  `ov_gst` double NOT NULL DEFAULT '0',
+  `ov_freight` double NOT NULL DEFAULT '0',
+  `ov_freight_tax` double NOT NULL DEFAULT '0',
+  `ov_discount` double NOT NULL DEFAULT '0',
+  `alloc` double NOT NULL DEFAULT '0',
+  `rate` double NOT NULL DEFAULT '1',
+  `ship_via` int(11) DEFAULT NULL,
+  `trans_link` int(11) NOT NULL DEFAULT '0',
+  `dimension_id` int(11) NOT NULL DEFAULT '0',
+  `dimension2_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`trans_no`,`type`),
+  KEY `debtor_no` (`debtor_no`,`branch_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_debtor_trans`
+--
+
+LOCK TABLES `0_debtor_trans` WRITE;
+/*!40000 ALTER TABLE `0_debtor_trans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_debtor_trans` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_debtor_trans_details`
+--
+
+DROP TABLE IF EXISTS `0_debtor_trans_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_debtor_trans_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `debtor_trans_no` int(11) DEFAULT NULL,
+  `debtor_trans_type` int(11) DEFAULT NULL,
+  `stock_id` varchar(20) NOT NULL DEFAULT '',
+  `description` tinytext,
+  `unit_price` double NOT NULL DEFAULT '0',
+  `unit_tax` double NOT NULL DEFAULT '0',
+  `quantity` double NOT NULL DEFAULT '0',
+  `discount_percent` double NOT NULL DEFAULT '0',
+  `standard_cost` double NOT NULL DEFAULT '0',
+  `qty_done` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_debtor_trans_details`
+--
+
+LOCK TABLES `0_debtor_trans_details` WRITE;
+/*!40000 ALTER TABLE `0_debtor_trans_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_debtor_trans_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_debtors_master`
+--
+
+DROP TABLE IF EXISTS `0_debtors_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_debtors_master` (
+  `debtor_no` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `debtor_ref` varchar(30) NOT NULL,
+  `address` tinytext,
+  `email` varchar(100) NOT NULL DEFAULT '',
+  `tax_id` varchar(55) NOT NULL DEFAULT '',
+  `curr_code` char(3) NOT NULL DEFAULT '',
+  `sales_type` int(11) NOT NULL DEFAULT '1',
+  `dimension_id` int(11) NOT NULL DEFAULT '0',
+  `dimension2_id` int(11) NOT NULL DEFAULT '0',
+  `credit_status` int(11) NOT NULL DEFAULT '0',
+  `payment_terms` int(11) DEFAULT NULL,
+  `discount` double NOT NULL DEFAULT '0',
+  `pymt_discount` double NOT NULL DEFAULT '0',
+  `credit_limit` float NOT NULL DEFAULT '1000',
+  `notes` tinytext NOT NULL,
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`debtor_no`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_debtors_master`
+--
+
+LOCK TABLES `0_debtors_master` WRITE;
+/*!40000 ALTER TABLE `0_debtors_master` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_debtors_master` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_dimensions`
+--
+
+DROP TABLE IF EXISTS `0_dimensions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_dimensions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reference` varchar(60) NOT NULL DEFAULT '',
+  `name` varchar(60) NOT NULL DEFAULT '',
+  `type_` tinyint(1) NOT NULL DEFAULT '1',
+  `closed` tinyint(1) NOT NULL DEFAULT '0',
+  `date_` date NOT NULL DEFAULT '0000-00-00',
+  `due_date` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `reference` (`reference`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_dimensions`
+--
+
+LOCK TABLES `0_dimensions` WRITE;
+/*!40000 ALTER TABLE `0_dimensions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_dimensions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_exchange_rates`
+--
+
+DROP TABLE IF EXISTS `0_exchange_rates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_exchange_rates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `curr_code` char(3) NOT NULL DEFAULT '',
+  `rate_buy` double NOT NULL DEFAULT '0',
+  `rate_sell` double NOT NULL DEFAULT '0',
+  `date_` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `curr_code` (`curr_code`,`date_`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_exchange_rates`
+--
+
+LOCK TABLES `0_exchange_rates` WRITE;
+/*!40000 ALTER TABLE `0_exchange_rates` DISABLE KEYS */;
+INSERT INTO `0_exchange_rates` VALUES (2,'EUR',13277.04,13277.04,'2010-01-15'),(4,'USD',9165.4287,9165.4287,'2010-01-15');
+/*!40000 ALTER TABLE `0_exchange_rates` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_fiscal_year`
+--
+
+DROP TABLE IF EXISTS `0_fiscal_year`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_fiscal_year` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `begin` date DEFAULT '0000-00-00',
+  `end` date DEFAULT '0000-00-00',
+  `closed` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_fiscal_year`
+--
+
+LOCK TABLES `0_fiscal_year` WRITE;
+/*!40000 ALTER TABLE `0_fiscal_year` DISABLE KEYS */;
+INSERT INTO `0_fiscal_year` VALUES (1,'2008-01-01','2008-12-31',0);
+/*!40000 ALTER TABLE `0_fiscal_year` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_gl_trans`
+--
+
+DROP TABLE IF EXISTS `0_gl_trans`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_gl_trans` (
+  `counter` int(11) NOT NULL AUTO_INCREMENT,
+  `type` smallint(6) NOT NULL DEFAULT '0',
+  `type_no` bigint(16) NOT NULL DEFAULT '1',
+  `tran_date` date NOT NULL DEFAULT '0000-00-00',
+  `account` varchar(11) NOT NULL DEFAULT '',
+  `memo_` tinytext NOT NULL,
+  `amount` double NOT NULL DEFAULT '0',
+  `dimension_id` int(11) NOT NULL DEFAULT '0',
+  `dimension2_id` int(11) NOT NULL DEFAULT '0',
+  `person_type_id` int(11) DEFAULT NULL,
+  `person_id` tinyblob,
+  PRIMARY KEY (`counter`),
+  KEY `Type_and_Number` (`type`,`type_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_gl_trans`
+--
+
+LOCK TABLES `0_gl_trans` WRITE;
+/*!40000 ALTER TABLE `0_gl_trans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_gl_trans` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_grn_batch`
+--
+
+DROP TABLE IF EXISTS `0_grn_batch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_grn_batch` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `supplier_id` int(11) NOT NULL DEFAULT '0',
+  `purch_order_no` int(11) DEFAULT NULL,
+  `reference` varchar(60) NOT NULL DEFAULT '',
+  `delivery_date` date NOT NULL DEFAULT '0000-00-00',
+  `loc_code` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_grn_batch`
+--
+
+LOCK TABLES `0_grn_batch` WRITE;
+/*!40000 ALTER TABLE `0_grn_batch` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_grn_batch` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_grn_items`
+--
+
+DROP TABLE IF EXISTS `0_grn_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_grn_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `grn_batch_id` int(11) DEFAULT NULL,
+  `po_detail_item` int(11) NOT NULL DEFAULT '0',
+  `item_code` varchar(20) NOT NULL DEFAULT '',
+  `description` tinytext,
+  `qty_recd` double NOT NULL DEFAULT '0',
+  `quantity_inv` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_grn_items`
+--
+
+LOCK TABLES `0_grn_items` WRITE;
+/*!40000 ALTER TABLE `0_grn_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_grn_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_groups`
+--
+
+DROP TABLE IF EXISTS `0_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_groups` (
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `description` varchar(60) NOT NULL DEFAULT '',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `description` (`description`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_groups`
+--
+
+LOCK TABLES `0_groups` WRITE;
+/*!40000 ALTER TABLE `0_groups` DISABLE KEYS */;
+INSERT INTO `0_groups` VALUES (1,'Small',0),(2,'Medium',0),(3,'Large',0);
+/*!40000 ALTER TABLE `0_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_item_codes`
+--
+
+DROP TABLE IF EXISTS `0_item_codes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_item_codes` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `item_code` varchar(20) NOT NULL,
+  `stock_id` varchar(20) NOT NULL,
+  `description` varchar(200) NOT NULL DEFAULT '',
+  `category_id` smallint(6) unsigned NOT NULL,
+  `quantity` double NOT NULL DEFAULT '1',
+  `is_foreign` tinyint(1) NOT NULL DEFAULT '0',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `stock_id` (`stock_id`,`item_code`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_item_codes`
+--
+
+LOCK TABLES `0_item_codes` WRITE;
+/*!40000 ALTER TABLE `0_item_codes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_item_codes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_item_tax_type_exemptions`
+--
+
+DROP TABLE IF EXISTS `0_item_tax_type_exemptions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_item_tax_type_exemptions` (
+  `item_tax_type_id` int(11) NOT NULL DEFAULT '0',
+  `tax_type_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`item_tax_type_id`,`tax_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_item_tax_type_exemptions`
+--
+
+LOCK TABLES `0_item_tax_type_exemptions` WRITE;
+/*!40000 ALTER TABLE `0_item_tax_type_exemptions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_item_tax_type_exemptions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_item_tax_types`
+--
+
+DROP TABLE IF EXISTS `0_item_tax_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_item_tax_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(60) NOT NULL DEFAULT '',
+  `exempt` tinyint(1) NOT NULL DEFAULT '0',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_item_tax_types`
+--
+
+LOCK TABLES `0_item_tax_types` WRITE;
+/*!40000 ALTER TABLE `0_item_tax_types` DISABLE KEYS */;
+INSERT INTO `0_item_tax_types` VALUES (1,'PPN',0,0);
+/*!40000 ALTER TABLE `0_item_tax_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_item_units`
+--
+
+DROP TABLE IF EXISTS `0_item_units`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_item_units` (
+  `abbr` varchar(20) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `decimals` tinyint(2) NOT NULL,
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`abbr`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_item_units`
+--
+
+LOCK TABLES `0_item_units` WRITE;
+/*!40000 ALTER TABLE `0_item_units` DISABLE KEYS */;
+INSERT INTO `0_item_units` VALUES ('ea.','Each',0,0);
+/*!40000 ALTER TABLE `0_item_units` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_loc_stock`
+--
+
+DROP TABLE IF EXISTS `0_loc_stock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_loc_stock` (
+  `loc_code` char(5) NOT NULL DEFAULT '',
+  `stock_id` char(20) NOT NULL DEFAULT '',
+  `reorder_level` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`loc_code`,`stock_id`),
+  KEY `stock_id` (`stock_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_loc_stock`
+--
+
+LOCK TABLES `0_loc_stock` WRITE;
+/*!40000 ALTER TABLE `0_loc_stock` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_loc_stock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_locations`
+--
+
+DROP TABLE IF EXISTS `0_locations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_locations` (
+  `loc_code` varchar(5) NOT NULL DEFAULT '',
+  `location_name` varchar(60) NOT NULL DEFAULT '',
+  `delivery_address` tinytext NOT NULL,
+  `phone` varchar(30) NOT NULL DEFAULT '',
+  `phone2` varchar(30) NOT NULL DEFAULT '',
+  `fax` varchar(30) NOT NULL DEFAULT '',
+  `email` varchar(100) NOT NULL DEFAULT '',
+  `contact` varchar(30) NOT NULL DEFAULT '',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`loc_code`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_locations`
+--
+
+LOCK TABLES `0_locations` WRITE;
+/*!40000 ALTER TABLE `0_locations` DISABLE KEYS */;
+INSERT INTO `0_locations` VALUES ('DEF','Default','N/A','','','','','',0);
+/*!40000 ALTER TABLE `0_locations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_movement_types`
+--
+
+DROP TABLE IF EXISTS `0_movement_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_movement_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(60) NOT NULL DEFAULT '',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_movement_types`
+--
+
+LOCK TABLES `0_movement_types` WRITE;
+/*!40000 ALTER TABLE `0_movement_types` DISABLE KEYS */;
+INSERT INTO `0_movement_types` VALUES (1,'Adjustment',0);
+/*!40000 ALTER TABLE `0_movement_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_payment_terms`
+--
+
+DROP TABLE IF EXISTS `0_payment_terms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_payment_terms` (
+  `terms_indicator` int(11) NOT NULL AUTO_INCREMENT,
+  `terms` char(80) NOT NULL DEFAULT '',
+  `days_before_due` smallint(6) NOT NULL DEFAULT '0',
+  `day_in_following_month` smallint(6) NOT NULL DEFAULT '0',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`terms_indicator`),
+  UNIQUE KEY `terms` (`terms`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_payment_terms`
+--
+
+LOCK TABLES `0_payment_terms` WRITE;
+/*!40000 ALTER TABLE `0_payment_terms` DISABLE KEYS */;
+INSERT INTO `0_payment_terms` VALUES (1,'Due 15th Of the Following Month',0,17,0),(2,'Due By End Of The Following Month',0,30,0),(3,'Payment due within 10 days',10,0,0),(4,'Cash Only',1,0,0);
+/*!40000 ALTER TABLE `0_payment_terms` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_prices`
+--
+
+DROP TABLE IF EXISTS `0_prices`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_prices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `stock_id` varchar(20) NOT NULL DEFAULT '',
+  `sales_type_id` int(11) NOT NULL DEFAULT '0',
+  `curr_abrev` char(3) NOT NULL DEFAULT '',
+  `price` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `price` (`stock_id`,`sales_type_id`,`curr_abrev`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_prices`
+--
+
+LOCK TABLES `0_prices` WRITE;
+/*!40000 ALTER TABLE `0_prices` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_prices` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_print_profiles`
+--
+
+DROP TABLE IF EXISTS `0_print_profiles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_print_profiles` (
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `profile` varchar(30) NOT NULL,
+  `report` varchar(5) DEFAULT NULL,
+  `printer` tinyint(3) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `profile` (`profile`,`report`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_print_profiles`
+--
+
+LOCK TABLES `0_print_profiles` WRITE;
+/*!40000 ALTER TABLE `0_print_profiles` DISABLE KEYS */;
+INSERT INTO `0_print_profiles` VALUES (1,'Out of office',NULL,0),(2,'Sales Department',NULL,0),(3,'Central',NULL,2),(4,'Sales Department','104',2),(5,'Sales Department','105',2),(6,'Sales Department','107',2),(7,'Sales Department','109',2),(8,'Sales Department','110',2),(9,'Sales Department','201',2);
+/*!40000 ALTER TABLE `0_print_profiles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_printers`
+--
+
+DROP TABLE IF EXISTS `0_printers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_printers` (
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `description` varchar(60) NOT NULL,
+  `queue` varchar(20) NOT NULL,
+  `host` varchar(40) NOT NULL,
+  `port` smallint(11) unsigned NOT NULL,
+  `timeout` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_printers`
+--
+
+LOCK TABLES `0_printers` WRITE;
+/*!40000 ALTER TABLE `0_printers` DISABLE KEYS */;
+INSERT INTO `0_printers` VALUES (1,'QL500','Label printer','QL500','server',127,20),(2,'Samsung','Main network printer','scx4521F','server',515,5),(3,'Local','Local print server at user IP','lp','',515,10);
+/*!40000 ALTER TABLE `0_printers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_purch_data`
+--
+
+DROP TABLE IF EXISTS `0_purch_data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_purch_data` (
+  `supplier_id` int(11) NOT NULL DEFAULT '0',
+  `stock_id` char(20) NOT NULL DEFAULT '',
+  `price` double NOT NULL DEFAULT '0',
+  `suppliers_uom` char(50) NOT NULL DEFAULT '',
+  `conversion_factor` double NOT NULL DEFAULT '1',
+  `supplier_description` char(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`supplier_id`,`stock_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_purch_data`
+--
+
+LOCK TABLES `0_purch_data` WRITE;
+/*!40000 ALTER TABLE `0_purch_data` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_purch_data` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_purch_order_details`
+--
+
+DROP TABLE IF EXISTS `0_purch_order_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_purch_order_details` (
+  `po_detail_item` int(11) NOT NULL AUTO_INCREMENT,
+  `order_no` int(11) NOT NULL DEFAULT '0',
+  `item_code` varchar(20) NOT NULL DEFAULT '',
+  `description` tinytext,
+  `delivery_date` date NOT NULL DEFAULT '0000-00-00',
+  `qty_invoiced` double NOT NULL DEFAULT '0',
+  `unit_price` double NOT NULL DEFAULT '0',
+  `act_price` double NOT NULL DEFAULT '0',
+  `std_cost_unit` double NOT NULL DEFAULT '0',
+  `quantity_ordered` double NOT NULL DEFAULT '0',
+  `quantity_received` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`po_detail_item`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_purch_order_details`
+--
+
+LOCK TABLES `0_purch_order_details` WRITE;
+/*!40000 ALTER TABLE `0_purch_order_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_purch_order_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_purch_orders`
+--
+
+DROP TABLE IF EXISTS `0_purch_orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_purch_orders` (
+  `order_no` int(11) NOT NULL AUTO_INCREMENT,
+  `supplier_id` int(11) NOT NULL DEFAULT '0',
+  `comments` tinytext,
+  `ord_date` date NOT NULL DEFAULT '0000-00-00',
+  `reference` tinytext NOT NULL,
+  `requisition_no` tinytext,
+  `into_stock_location` varchar(5) NOT NULL DEFAULT '',
+  `delivery_address` tinytext NOT NULL,
+  PRIMARY KEY (`order_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_purch_orders`
+--
+
+LOCK TABLES `0_purch_orders` WRITE;
+/*!40000 ALTER TABLE `0_purch_orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_purch_orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_quick_entries`
+--
+
+DROP TABLE IF EXISTS `0_quick_entries`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_quick_entries` (
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `type` tinyint(1) NOT NULL DEFAULT '0',
+  `description` varchar(60) NOT NULL,
+  `base_amount` double NOT NULL DEFAULT '0',
+  `base_desc` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `description` (`description`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_quick_entries`
+--
+
+LOCK TABLES `0_quick_entries` WRITE;
+/*!40000 ALTER TABLE `0_quick_entries` DISABLE KEYS */;
+INSERT INTO `0_quick_entries` VALUES (1,1,'Maintenance',0,'Amount'),(2,4,'Phone',0,'Amount'),(3,2,'Cash Sales',0,'Amount');
+/*!40000 ALTER TABLE `0_quick_entries` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_quick_entry_lines`
+--
+
+DROP TABLE IF EXISTS `0_quick_entry_lines`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_quick_entry_lines` (
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `qid` smallint(6) unsigned NOT NULL,
+  `amount` double DEFAULT '0',
+  `action` varchar(2) NOT NULL,
+  `dest_id` varchar(11) NOT NULL,
+  `dimension_id` smallint(6) unsigned DEFAULT NULL,
+  `dimension2_id` smallint(6) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `qid` (`qid`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_quick_entry_lines`
+--
+
+LOCK TABLES `0_quick_entry_lines` WRITE;
+/*!40000 ALTER TABLE `0_quick_entry_lines` DISABLE KEYS */;
+INSERT INTO `0_quick_entry_lines` VALUES (1,1,0,'t-','1',0,0),(2,2,0,'t-','1',0,0),(3,3,0,'t-','1',0,0),(4,3,0,'=','41001000',0,0),(5,1,0,'=','61301110',0,0),(6,2,0,'=','61401110',0,0);
+/*!40000 ALTER TABLE `0_quick_entry_lines` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_recurrent_invoices`
+--
+
+DROP TABLE IF EXISTS `0_recurrent_invoices`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_recurrent_invoices` (
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `description` varchar(60) NOT NULL DEFAULT '',
+  `order_no` int(11) unsigned NOT NULL,
+  `debtor_no` int(11) unsigned DEFAULT NULL,
+  `group_no` smallint(6) unsigned DEFAULT NULL,
+  `days` int(11) NOT NULL DEFAULT '0',
+  `monthly` int(11) NOT NULL DEFAULT '0',
+  `begin` date NOT NULL DEFAULT '0000-00-00',
+  `end` date NOT NULL DEFAULT '0000-00-00',
+  `last_sent` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `description` (`description`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_recurrent_invoices`
+--
+
+LOCK TABLES `0_recurrent_invoices` WRITE;
+/*!40000 ALTER TABLE `0_recurrent_invoices` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_recurrent_invoices` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_refs`
+--
+
+DROP TABLE IF EXISTS `0_refs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_refs` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `type` int(11) NOT NULL DEFAULT '0',
+  `reference` varchar(100) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`,`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_refs`
+--
+
+LOCK TABLES `0_refs` WRITE;
+/*!40000 ALTER TABLE `0_refs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_refs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_sales_order_details`
+--
+
+DROP TABLE IF EXISTS `0_sales_order_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_sales_order_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_no` int(11) NOT NULL DEFAULT '0',
+  `trans_type` smallint(6) NOT NULL DEFAULT '30',
+  `stk_code` varchar(20) NOT NULL DEFAULT '',
+  `description` tinytext,
+  `qty_sent` double NOT NULL DEFAULT '0',
+  `unit_price` double NOT NULL DEFAULT '0',
+  `quantity` double NOT NULL DEFAULT '0',
+  `discount_percent` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_sales_order_details`
+--
+
+LOCK TABLES `0_sales_order_details` WRITE;
+/*!40000 ALTER TABLE `0_sales_order_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_sales_order_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_sales_orders`
+--
+
+DROP TABLE IF EXISTS `0_sales_orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_sales_orders` (
+  `order_no` int(11) NOT NULL,
+  `trans_type` smallint(6) NOT NULL DEFAULT '30',
+  `version` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `type` tinyint(1) NOT NULL DEFAULT '0',
+  `debtor_no` int(11) NOT NULL DEFAULT '0',
+  `branch_code` int(11) NOT NULL DEFAULT '0',
+  `reference` varchar(100) NOT NULL DEFAULT '',
+  `customer_ref` tinytext NOT NULL,
+  `comments` tinytext,
+  `ord_date` date NOT NULL DEFAULT '0000-00-00',
+  `order_type` int(11) NOT NULL DEFAULT '0',
+  `ship_via` int(11) NOT NULL DEFAULT '0',
+  `delivery_address` tinytext NOT NULL,
+  `contact_phone` varchar(30) DEFAULT NULL,
+  `contact_email` varchar(100) DEFAULT NULL,
+  `deliver_to` tinytext NOT NULL,
+  `freight_cost` double NOT NULL DEFAULT '0',
+  `from_stk_loc` varchar(5) NOT NULL DEFAULT '',
+  `delivery_date` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`trans_type`,`order_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_sales_orders`
+--
+
+LOCK TABLES `0_sales_orders` WRITE;
+/*!40000 ALTER TABLE `0_sales_orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_sales_orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_sales_pos`
+--
+
+DROP TABLE IF EXISTS `0_sales_pos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_sales_pos` (
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `pos_name` varchar(30) NOT NULL,
+  `cash_sale` tinyint(1) NOT NULL,
+  `credit_sale` tinyint(1) NOT NULL,
+  `pos_location` varchar(5) NOT NULL,
+  `pos_account` smallint(6) unsigned NOT NULL,
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pos_name` (`pos_name`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_sales_pos`
+--
+
+LOCK TABLES `0_sales_pos` WRITE;
+/*!40000 ALTER TABLE `0_sales_pos` DISABLE KEYS */;
+INSERT INTO `0_sales_pos` VALUES (1,'Default',1,1,'DEF',2,0);
+/*!40000 ALTER TABLE `0_sales_pos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_sales_types`
+--
+
+DROP TABLE IF EXISTS `0_sales_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_sales_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sales_type` char(50) NOT NULL DEFAULT '',
+  `tax_included` int(1) NOT NULL DEFAULT '0',
+  `factor` double NOT NULL DEFAULT '1',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sales_type` (`sales_type`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_sales_types`
+--
+
+LOCK TABLES `0_sales_types` WRITE;
+/*!40000 ALTER TABLE `0_sales_types` DISABLE KEYS */;
+INSERT INTO `0_sales_types` VALUES (1,'Retail',1,1,0),(2,'Wholesale',0,0.7,0);
+/*!40000 ALTER TABLE `0_sales_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_salesman`
+--
+
+DROP TABLE IF EXISTS `0_salesman`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_salesman` (
+  `salesman_code` int(11) NOT NULL AUTO_INCREMENT,
+  `salesman_name` char(60) NOT NULL DEFAULT '',
+  `salesman_phone` char(30) NOT NULL DEFAULT '',
+  `salesman_fax` char(30) NOT NULL DEFAULT '',
+  `salesman_email` varchar(100) NOT NULL DEFAULT '',
+  `provision` double NOT NULL DEFAULT '0',
+  `break_pt` double NOT NULL DEFAULT '0',
+  `provision2` double NOT NULL DEFAULT '0',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`salesman_code`),
+  UNIQUE KEY `salesman_name` (`salesman_name`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_salesman`
+--
+
+LOCK TABLES `0_salesman` WRITE;
+/*!40000 ALTER TABLE `0_salesman` DISABLE KEYS */;
+INSERT INTO `0_salesman` VALUES (1,'Sales Person','','','',5,1000,4,0);
+/*!40000 ALTER TABLE `0_salesman` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_security_roles`
+--
+
+DROP TABLE IF EXISTS `0_security_roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_security_roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role` varchar(30) NOT NULL,
+  `description` varchar(50) DEFAULT NULL,
+  `sections` text,
+  `areas` text,
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `role` (`role`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_security_roles`
+--
+
+LOCK TABLES `0_security_roles` WRITE;
+/*!40000 ALTER TABLE `0_security_roles` DISABLE KEYS */;
+INSERT INTO `0_security_roles` VALUES (1,'Inquiries','Inquiries','768;2816;3072;3328;5632;5888;8192;8448;10752;11008;13312;15872;16128','257;258;259;260;513;514;515;516;517;518;519;520;521;522;523;524;525;773;774;2822;3073;3075;3076;3077;3329;3330;3331;3332;3333;3334;3335;5377;5633;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8450;8451;10497;10753;11009;11010;11012;13313;13315;15617;15618;15619;15620;15621;15622;15623;15624;15625;15626;15873;15882;16129;16130;16131;16132',0),(2,'System Administrator','System Administrator','256;512;768;2816;3072;3328;5376;5632;5888;7936;8192;8448;10496;10752;11008;13056;13312;15616;15872;16128','257;258;259;260;513;514;515;516;517;518;519;520;521;522;523;524;525;769;770;771;772;773;774;2817;2818;2819;2820;2821;2822;2823;3073;3074;3082;3075;3076;3077;3078;3079;3080;3081;3329;3330;3331;3332;3333;3334;3335;5377;5633;5634;5635;5636;5637;5641;5638;5639;5640;5889;5891;7937;7938;7939;7940;8193;8194;8195;8196;8197;8449;8450;8451;10497;10753;10754;10755;10756;10757;11009;11010;11012;13057;13313;13314;13315;15617;15618;15619;15620;15621;15622;15623;15624;15625;15626;15627;15873;15874;15875;15876;15877;15878;15879;15880;15883;15881;15882;16129;16130;16131;16132',0),(3,'Salesman','Salesman','768;3072;5632;8192;15872','773;774;3073;3075;3081;5633;8194;15873',0),(4,'Stock Manager','Stock Manager','2816;3072;3328;5632;5888;8192;8448;10752;11008;13312;15872;16128','2818;2822;3073;3076;3077;3329;3330;3330;3330;3331;3331;3332;3333;3334;3335;5633;5640;5889;5890;5891;8193;8194;8450;8451;10753;11009;11010;11012;13313;13315;15882;16129;16130;16131;16132',0),(5,'Production Manager','Production Manager','512;2816;3072;3328;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128','521;523;524;2818;2819;2820;2821;2822;2823;3073;3074;3076;3077;3078;3079;3080;3081;3329;3330;3330;3330;3331;3331;3332;3333;3334;3335;5633;5640;5640;5889;5890;5891;8193;8194;8196;8197;8450;8451;10753;10755;11009;11010;11012;13313;13315;15617;15619;15620;15621;15624;15624;15876;15877;15880;15882;16129;16130;16131;16132',0),(6,'Purchase Officer','Purchase Officer','512;2816;3072;3328;5376;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128','521;523;524;2818;2819;2820;2821;2822;2823;3073;3074;3076;3077;3078;3079;3080;3081;3329;3330;3330;3330;3331;3331;3332;3333;3334;3335;5377;5633;5635;5640;5640;5889;5890;5891;8193;8194;8196;8197;8449;8450;8451;10753;10755;11009;11010;11012;13313;13315;15617;15619;15620;15621;15624;15624;15876;15877;15880;15882;16129;16130;16131;16132',0),(7,'AR Officer','AR Officer','512;768;2816;3072;3328;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128','521;523;524;771;773;774;2818;2819;2820;2821;2822;2823;3073;3073;3074;3075;3076;3077;3078;3079;3080;3081;3081;3329;3330;3330;3330;3331;3331;3332;3333;3334;3335;5633;5633;5634;5637;5638;5639;5640;5640;5889;5890;5891;8193;8194;8194;8196;8197;8450;8451;10753;10755;11009;11010;11012;13313;13315;15617;15619;15620;15621;15624;15624;15873;15876;15877;15878;15880;15882;16129;16130;16131;16132',0),(8,'AP Officer','AP Officer','512;2816;3072;3328;5376;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128','257;258;259;260;521;523;524;769;770;771;772;773;774;2818;2819;2820;2821;2822;2823;3073;3074;3082;3076;3077;3078;3079;3080;3081;3329;3330;3331;3332;3333;3334;3335;5377;5633;5635;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8196;8197;8449;8450;8451;10497;10753;10755;11009;11010;11012;13057;13313;13315;15617;15619;15620;15621;15624;15876;15877;15880;15882;16129;16130;16131;16132',0),(9,'Accountant','New Accountant','512;768;2816;3072;3328;5376;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128','257;258;259;260;521;523;524;771;772;773;774;2818;2819;2820;2821;2822;2823;3073;3074;3075;3076;3077;3078;3079;3080;3081;3329;3330;3331;3332;3333;3334;3335;5377;5633;5634;5635;5637;5638;5639;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8196;8197;8449;8450;8451;10497;10753;10755;11009;11010;11012;13313;13315;15617;15618;15619;15620;15621;15624;15873;15876;15877;15878;15880;15882;16129;16130;16131;16132',0),(10,'Sub Admin','Sub Admin','512;768;2816;3072;3328;5376;5632;5888;8192;8448;10752;11008;13312;15616;15872;16128','257;258;259;260;521;523;524;771;772;773;774;2818;2819;2820;2821;2822;2823;3073;3074;3082;3075;3076;3077;3078;3079;3080;3081;3329;3330;3331;3332;3333;3334;3335;5377;5633;5634;5635;5637;5638;5639;5640;5889;5890;5891;7937;7938;7939;7940;8193;8194;8196;8197;8449;8450;8451;10497;10753;10755;11009;11010;11012;13057;13313;13315;15617;15619;15620;15621;15624;15873;15874;15876;15877;15878;15879;15880;15882;16129;16130;16131;16132',0);
+/*!40000 ALTER TABLE `0_security_roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_shippers`
+--
+
+DROP TABLE IF EXISTS `0_shippers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_shippers` (
+  `shipper_id` int(11) NOT NULL AUTO_INCREMENT,
+  `shipper_name` varchar(60) NOT NULL DEFAULT '',
+  `phone` varchar(30) NOT NULL DEFAULT '',
+  `phone2` varchar(30) NOT NULL DEFAULT '',
+  `contact` tinytext NOT NULL,
+  `address` tinytext NOT NULL,
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`shipper_id`),
+  UNIQUE KEY `name` (`shipper_name`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_shippers`
+--
+
+LOCK TABLES `0_shippers` WRITE;
+/*!40000 ALTER TABLE `0_shippers` DISABLE KEYS */;
+INSERT INTO `0_shippers` VALUES (1,'Default','','','','',0);
+/*!40000 ALTER TABLE `0_shippers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_sql_trail`
+--
+
+DROP TABLE IF EXISTS `0_sql_trail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_sql_trail` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `sql` text NOT NULL,
+  `result` tinyint(1) NOT NULL,
+  `msg` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_sql_trail`
+--
+
+LOCK TABLES `0_sql_trail` WRITE;
+/*!40000 ALTER TABLE `0_sql_trail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_sql_trail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_stock_category`
+--
+
+DROP TABLE IF EXISTS `0_stock_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_stock_category` (
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(60) NOT NULL DEFAULT '',
+  `dflt_tax_type` int(11) NOT NULL DEFAULT '0',
+  `dflt_units` varchar(20) NOT NULL DEFAULT 'each',
+  `dflt_mb_flag` char(1) NOT NULL DEFAULT 'B',
+  `dflt_sales_act` varchar(11) NOT NULL DEFAULT '',
+  `dflt_cogs_act` varchar(11) NOT NULL DEFAULT '',
+  `dflt_inventory_act` varchar(11) NOT NULL DEFAULT '',
+  `dflt_adjustment_act` varchar(11) NOT NULL DEFAULT '',
+  `dflt_assembly_act` varchar(11) NOT NULL DEFAULT '',
+  `dflt_dim1` int(11) DEFAULT NULL,
+  `dflt_dim2` int(11) DEFAULT NULL,
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  `dflt_no_sale` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`category_id`),
+  UNIQUE KEY `description` (`description`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_stock_category`
+--
+
+LOCK TABLES `0_stock_category` WRITE;
+/*!40000 ALTER TABLE `0_stock_category` DISABLE KEYS */;
+INSERT INTO `0_stock_category` VALUES (6,'Komponen',1,'ea.','B','41001000','51010000','11151100','51060000','51030000',0,0,0,1),(7,'Jasa',1,'ea.','D','41002000','51020000','11151100','51060000','51030000',0,0,0,0),(8,'Barang Dagang',1,'ea.','B','41001000','51010000','11151100','51060000','51030000',0,0,0,0),(9,'Barang Jadi',1,'ea.','M','41001000','51010000','11151100','51060000','51030000',0,0,0,0);
+/*!40000 ALTER TABLE `0_stock_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_stock_master`
+--
+
+DROP TABLE IF EXISTS `0_stock_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_stock_master` (
+  `stock_id` varchar(20) NOT NULL DEFAULT '',
+  `category_id` int(11) NOT NULL DEFAULT '0',
+  `tax_type_id` int(11) NOT NULL DEFAULT '0',
+  `description` varchar(200) NOT NULL DEFAULT '',
+  `long_description` tinytext NOT NULL,
+  `units` varchar(20) NOT NULL DEFAULT 'each',
+  `mb_flag` char(1) NOT NULL DEFAULT 'B',
+  `sales_account` varchar(11) NOT NULL DEFAULT '',
+  `cogs_account` varchar(11) NOT NULL DEFAULT '',
+  `inventory_account` varchar(11) NOT NULL DEFAULT '',
+  `adjustment_account` varchar(11) NOT NULL DEFAULT '',
+  `assembly_account` varchar(11) NOT NULL DEFAULT '',
+  `dimension_id` int(11) DEFAULT NULL,
+  `dimension2_id` int(11) DEFAULT NULL,
+  `actual_cost` double NOT NULL DEFAULT '0',
+  `last_cost` double NOT NULL DEFAULT '0',
+  `material_cost` double NOT NULL DEFAULT '0',
+  `labour_cost` double NOT NULL DEFAULT '0',
+  `overhead_cost` double NOT NULL DEFAULT '0',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  `no_sale` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`stock_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_stock_master`
+--
+
+LOCK TABLES `0_stock_master` WRITE;
+/*!40000 ALTER TABLE `0_stock_master` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_stock_master` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_stock_moves`
+--
+
+DROP TABLE IF EXISTS `0_stock_moves`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_stock_moves` (
+  `trans_id` int(11) NOT NULL AUTO_INCREMENT,
+  `trans_no` int(11) NOT NULL DEFAULT '0',
+  `stock_id` char(20) NOT NULL DEFAULT '',
+  `type` smallint(6) NOT NULL DEFAULT '0',
+  `loc_code` char(5) NOT NULL DEFAULT '',
+  `tran_date` date NOT NULL DEFAULT '0000-00-00',
+  `person_id` int(11) DEFAULT NULL,
+  `price` double NOT NULL DEFAULT '0',
+  `reference` char(40) NOT NULL DEFAULT '',
+  `qty` double NOT NULL DEFAULT '1',
+  `discount_percent` double NOT NULL DEFAULT '0',
+  `standard_cost` double NOT NULL DEFAULT '0',
+  `visible` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`trans_id`),
+  KEY `type` (`type`,`trans_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_stock_moves`
+--
+
+LOCK TABLES `0_stock_moves` WRITE;
+/*!40000 ALTER TABLE `0_stock_moves` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_stock_moves` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_supp_allocations`
+--
+
+DROP TABLE IF EXISTS `0_supp_allocations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_supp_allocations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `amt` double unsigned DEFAULT NULL,
+  `date_alloc` date NOT NULL DEFAULT '0000-00-00',
+  `trans_no_from` int(11) DEFAULT NULL,
+  `trans_type_from` int(11) DEFAULT NULL,
+  `trans_no_to` int(11) DEFAULT NULL,
+  `trans_type_to` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_supp_allocations`
+--
+
+LOCK TABLES `0_supp_allocations` WRITE;
+/*!40000 ALTER TABLE `0_supp_allocations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_supp_allocations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_supp_invoice_items`
+--
+
+DROP TABLE IF EXISTS `0_supp_invoice_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_supp_invoice_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `supp_trans_no` int(11) DEFAULT NULL,
+  `supp_trans_type` int(11) DEFAULT NULL,
+  `gl_code` varchar(11) NOT NULL DEFAULT '0',
+  `grn_item_id` int(11) DEFAULT NULL,
+  `po_detail_item_id` int(11) DEFAULT NULL,
+  `stock_id` varchar(20) NOT NULL DEFAULT '',
+  `description` tinytext,
+  `quantity` double NOT NULL DEFAULT '0',
+  `unit_price` double NOT NULL DEFAULT '0',
+  `unit_tax` double NOT NULL DEFAULT '0',
+  `memo_` tinytext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_supp_invoice_items`
+--
+
+LOCK TABLES `0_supp_invoice_items` WRITE;
+/*!40000 ALTER TABLE `0_supp_invoice_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_supp_invoice_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_supp_trans`
+--
+
+DROP TABLE IF EXISTS `0_supp_trans`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_supp_trans` (
+  `trans_no` int(11) unsigned NOT NULL DEFAULT '0',
+  `type` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `supplier_id` int(11) unsigned DEFAULT NULL,
+  `reference` tinytext NOT NULL,
+  `supp_reference` varchar(60) NOT NULL DEFAULT '',
+  `tran_date` date NOT NULL DEFAULT '0000-00-00',
+  `due_date` date NOT NULL DEFAULT '0000-00-00',
+  `ov_amount` double NOT NULL DEFAULT '0',
+  `ov_discount` double NOT NULL DEFAULT '0',
+  `ov_gst` double NOT NULL DEFAULT '0',
+  `rate` double NOT NULL DEFAULT '1',
+  `alloc` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`trans_no`,`type`),
+  KEY `supplier_id` (`supplier_id`),
+  KEY `SupplierID_2` (`supplier_id`,`supp_reference`),
+  KEY `type` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_supp_trans`
+--
+
+LOCK TABLES `0_supp_trans` WRITE;
+/*!40000 ALTER TABLE `0_supp_trans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_supp_trans` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_suppliers`
+--
+
+DROP TABLE IF EXISTS `0_suppliers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_suppliers` (
+  `supplier_id` int(11) NOT NULL AUTO_INCREMENT,
+  `supp_name` varchar(60) NOT NULL DEFAULT '',
+  `supp_ref` varchar(30) NOT NULL DEFAULT '',
+  `address` tinytext NOT NULL,
+  `supp_address` tinytext NOT NULL,
+  `phone` varchar(30) NOT NULL DEFAULT '',
+  `phone2` varchar(30) NOT NULL DEFAULT '',
+  `fax` varchar(30) NOT NULL DEFAULT '',
+  `gst_no` varchar(25) NOT NULL DEFAULT '',
+  `contact` varchar(60) NOT NULL DEFAULT '',
+  `supp_account_no` varchar(40) NOT NULL DEFAULT '',
+  `email` varchar(100) NOT NULL DEFAULT '',
+  `website` varchar(100) NOT NULL DEFAULT '',
+  `bank_account` varchar(60) NOT NULL DEFAULT '',
+  `curr_code` char(3) DEFAULT NULL,
+  `payment_terms` int(11) DEFAULT NULL,
+  `dimension_id` int(11) DEFAULT '0',
+  `dimension2_id` int(11) DEFAULT '0',
+  `tax_group_id` int(11) DEFAULT NULL,
+  `credit_limit` double NOT NULL DEFAULT '0',
+  `purchase_account` varchar(11) DEFAULT NULL,
+  `payable_account` varchar(11) DEFAULT NULL,
+  `payment_discount_account` varchar(11) DEFAULT NULL,
+  `notes` tinytext NOT NULL,
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`supplier_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_suppliers`
+--
+
+LOCK TABLES `0_suppliers` WRITE;
+/*!40000 ALTER TABLE `0_suppliers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_suppliers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_sys_types`
+--
+
+DROP TABLE IF EXISTS `0_sys_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_sys_types` (
+  `type_id` smallint(6) NOT NULL DEFAULT '0',
+  `type_no` int(11) NOT NULL DEFAULT '1',
+  `next_reference` varchar(100) NOT NULL DEFAULT '',
+  PRIMARY KEY (`type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_sys_types`
+--
+
+LOCK TABLES `0_sys_types` WRITE;
+/*!40000 ALTER TABLE `0_sys_types` DISABLE KEYS */;
+INSERT INTO `0_sys_types` VALUES (0,17,'1'),(1,7,'1'),(2,4,'1'),(4,3,'1'),(10,16,'1'),(11,2,'1'),(12,6,'1'),(13,1,'1'),(16,2,'1'),(17,2,'1'),(18,1,'1'),(20,6,'1'),(21,1,'1'),(22,3,'1'),(25,1,'1'),(26,1,'1'),(28,1,'1'),(29,1,'1'),(30,0,'1'),(32,0,'1'),(35,1,'1'),(40,1,'1');
+/*!40000 ALTER TABLE `0_sys_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_tag_associations`
+--
+
+DROP TABLE IF EXISTS `0_tag_associations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_tag_associations` (
+  `record_id` varchar(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  UNIQUE KEY `record_id` (`record_id`,`tag_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_tag_associations`
+--
+
+LOCK TABLES `0_tag_associations` WRITE;
+/*!40000 ALTER TABLE `0_tag_associations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_tag_associations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_tags`
+--
+
+DROP TABLE IF EXISTS `0_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` smallint(6) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `description` varchar(60) DEFAULT NULL,
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `type` (`type`,`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_tags`
+--
+
+LOCK TABLES `0_tags` WRITE;
+/*!40000 ALTER TABLE `0_tags` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_tags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_tax_group_items`
+--
+
+DROP TABLE IF EXISTS `0_tax_group_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_tax_group_items` (
+  `tax_group_id` int(11) NOT NULL DEFAULT '0',
+  `tax_type_id` int(11) NOT NULL DEFAULT '0',
+  `rate` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`tax_group_id`,`tax_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_tax_group_items`
+--
+
+LOCK TABLES `0_tax_group_items` WRITE;
+/*!40000 ALTER TABLE `0_tax_group_items` DISABLE KEYS */;
+INSERT INTO `0_tax_group_items` VALUES (1,1,5),(2,1,10);
+/*!40000 ALTER TABLE `0_tax_group_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_tax_groups`
+--
+
+DROP TABLE IF EXISTS `0_tax_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_tax_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(60) NOT NULL DEFAULT '',
+  `tax_shipping` tinyint(1) NOT NULL DEFAULT '0',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_tax_groups`
+--
+
+LOCK TABLES `0_tax_groups` WRITE;
+/*!40000 ALTER TABLE `0_tax_groups` DISABLE KEYS */;
+INSERT INTO `0_tax_groups` VALUES (2,'PPN',0,0);
+/*!40000 ALTER TABLE `0_tax_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_tax_types`
+--
+
+DROP TABLE IF EXISTS `0_tax_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_tax_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rate` double NOT NULL DEFAULT '0',
+  `sales_gl_code` varchar(11) NOT NULL DEFAULT '',
+  `purchasing_gl_code` varchar(11) NOT NULL DEFAULT '',
+  `name` varchar(60) NOT NULL DEFAULT '',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_tax_types`
+--
+
+LOCK TABLES `0_tax_types` WRITE;
+/*!40000 ALTER TABLE `0_tax_types` DISABLE KEYS */;
+INSERT INTO `0_tax_types` VALUES (1,10,'21104110','11172010','PPN',0);
+/*!40000 ALTER TABLE `0_tax_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_trans_tax_details`
+--
+
+DROP TABLE IF EXISTS `0_trans_tax_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_trans_tax_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `trans_type` smallint(6) DEFAULT NULL,
+  `trans_no` int(11) DEFAULT NULL,
+  `tran_date` date NOT NULL,
+  `tax_type_id` int(11) NOT NULL DEFAULT '0',
+  `rate` double NOT NULL DEFAULT '0',
+  `ex_rate` double NOT NULL DEFAULT '1',
+  `included_in_price` tinyint(1) NOT NULL DEFAULT '0',
+  `net_amount` double NOT NULL DEFAULT '0',
+  `amount` double NOT NULL DEFAULT '0',
+  `memo` tinytext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_trans_tax_details`
+--
+
+LOCK TABLES `0_trans_tax_details` WRITE;
+/*!40000 ALTER TABLE `0_trans_tax_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_trans_tax_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_useronline`
+--
+
+DROP TABLE IF EXISTS `0_useronline`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_useronline` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` int(15) NOT NULL DEFAULT '0',
+  `ip` varchar(40) NOT NULL DEFAULT '',
+  `file` varchar(100) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `timestamp` (`timestamp`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_useronline`
+--
+
+LOCK TABLES `0_useronline` WRITE;
+/*!40000 ALTER TABLE `0_useronline` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_useronline` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_users`
+--
+
+DROP TABLE IF EXISTS `0_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_users` (
+  `id` smallint(6) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(60) NOT NULL DEFAULT '',
+  `password` varchar(100) NOT NULL DEFAULT '',
+  `real_name` varchar(100) NOT NULL DEFAULT '',
+  `role_id` int(11) NOT NULL DEFAULT '1',
+  `phone` varchar(30) NOT NULL DEFAULT '',
+  `email` varchar(100) DEFAULT NULL,
+  `language` varchar(20) DEFAULT NULL,
+  `date_format` tinyint(1) NOT NULL DEFAULT '0',
+  `date_sep` tinyint(1) NOT NULL DEFAULT '0',
+  `tho_sep` tinyint(1) NOT NULL DEFAULT '0',
+  `dec_sep` tinyint(1) NOT NULL DEFAULT '0',
+  `theme` varchar(20) NOT NULL DEFAULT 'default',
+  `page_size` varchar(20) NOT NULL DEFAULT 'A4',
+  `prices_dec` smallint(6) NOT NULL DEFAULT '2',
+  `qty_dec` smallint(6) NOT NULL DEFAULT '2',
+  `rates_dec` smallint(6) NOT NULL DEFAULT '4',
+  `percent_dec` smallint(6) NOT NULL DEFAULT '1',
+  `show_gl` tinyint(1) NOT NULL DEFAULT '1',
+  `show_codes` tinyint(1) NOT NULL DEFAULT '0',
+  `show_hints` tinyint(1) NOT NULL DEFAULT '0',
+  `last_visit_date` datetime DEFAULT NULL,
+  `query_size` tinyint(1) DEFAULT '10',
+  `graphic_links` tinyint(1) DEFAULT '1',
+  `pos` smallint(6) DEFAULT '1',
+  `print_profile` varchar(30) NOT NULL DEFAULT '1',
+  `rep_popup` tinyint(1) DEFAULT '1',
+  `sticky_doc_date` tinyint(1) DEFAULT '0',
+  `startup_tab` varchar(20) NOT NULL DEFAULT '',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_users`
+--
+
+LOCK TABLES `0_users` WRITE;
+/*!40000 ALTER TABLE `0_users` DISABLE KEYS */;
+INSERT INTO `0_users` VALUES (1,'admin','5f4dcc3b5aa765d61d8327deb882cf99','Administrator',2,'','adm@adm.com','en_US',0,0,0,0,'default','Letter',2,2,4,1,1,0,0,'2011-02-18 13:06:36',10,1,1,'1',1,0,'orders',0);
+/*!40000 ALTER TABLE `0_users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_voided`
+--
+
+DROP TABLE IF EXISTS `0_voided`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_voided` (
+  `type` int(11) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL DEFAULT '0',
+  `date_` date NOT NULL DEFAULT '0000-00-00',
+  `memo_` tinytext NOT NULL,
+  UNIQUE KEY `id` (`type`,`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_voided`
+--
+
+LOCK TABLES `0_voided` WRITE;
+/*!40000 ALTER TABLE `0_voided` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_voided` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_wo_issue_items`
+--
+
+DROP TABLE IF EXISTS `0_wo_issue_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_wo_issue_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `stock_id` varchar(40) DEFAULT NULL,
+  `issue_id` int(11) DEFAULT NULL,
+  `qty_issued` double DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_wo_issue_items`
+--
+
+LOCK TABLES `0_wo_issue_items` WRITE;
+/*!40000 ALTER TABLE `0_wo_issue_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_wo_issue_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_wo_issues`
+--
+
+DROP TABLE IF EXISTS `0_wo_issues`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_wo_issues` (
+  `issue_no` int(11) NOT NULL AUTO_INCREMENT,
+  `workorder_id` int(11) NOT NULL DEFAULT '0',
+  `reference` varchar(100) DEFAULT NULL,
+  `issue_date` date DEFAULT NULL,
+  `loc_code` varchar(5) DEFAULT NULL,
+  `workcentre_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`issue_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_wo_issues`
+--
+
+LOCK TABLES `0_wo_issues` WRITE;
+/*!40000 ALTER TABLE `0_wo_issues` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_wo_issues` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_wo_manufacture`
+--
+
+DROP TABLE IF EXISTS `0_wo_manufacture`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_wo_manufacture` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reference` varchar(100) DEFAULT NULL,
+  `workorder_id` int(11) NOT NULL DEFAULT '0',
+  `quantity` double NOT NULL DEFAULT '0',
+  `date_` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_wo_manufacture`
+--
+
+LOCK TABLES `0_wo_manufacture` WRITE;
+/*!40000 ALTER TABLE `0_wo_manufacture` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_wo_manufacture` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_wo_requirements`
+--
+
+DROP TABLE IF EXISTS `0_wo_requirements`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_wo_requirements` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `workorder_id` int(11) NOT NULL DEFAULT '0',
+  `stock_id` char(20) NOT NULL DEFAULT '',
+  `workcentre` int(11) NOT NULL DEFAULT '0',
+  `units_req` double NOT NULL DEFAULT '1',
+  `std_cost` double NOT NULL DEFAULT '0',
+  `loc_code` char(5) NOT NULL DEFAULT '',
+  `units_issued` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_wo_requirements`
+--
+
+LOCK TABLES `0_wo_requirements` WRITE;
+/*!40000 ALTER TABLE `0_wo_requirements` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_wo_requirements` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_workcentres`
+--
+
+DROP TABLE IF EXISTS `0_workcentres`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_workcentres` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(40) NOT NULL DEFAULT '',
+  `description` char(50) NOT NULL DEFAULT '',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_workcentres`
+--
+
+LOCK TABLES `0_workcentres` WRITE;
+/*!40000 ALTER TABLE `0_workcentres` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_workcentres` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `0_workorders`
+--
+
+DROP TABLE IF EXISTS `0_workorders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `0_workorders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `wo_ref` varchar(60) NOT NULL DEFAULT '',
+  `loc_code` varchar(5) NOT NULL DEFAULT '',
+  `units_reqd` double NOT NULL DEFAULT '1',
+  `stock_id` varchar(20) NOT NULL DEFAULT '',
+  `date_` date NOT NULL DEFAULT '0000-00-00',
+  `type` tinyint(4) NOT NULL DEFAULT '0',
+  `required_by` date NOT NULL DEFAULT '0000-00-00',
+  `released_date` date NOT NULL DEFAULT '0000-00-00',
+  `units_issued` double NOT NULL DEFAULT '0',
+  `closed` tinyint(1) NOT NULL DEFAULT '0',
+  `released` tinyint(1) NOT NULL DEFAULT '0',
+  `additional_costs` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `wo_ref` (`wo_ref`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `0_workorders`
+--
+
+LOCK TABLES `0_workorders` WRITE;
+/*!40000 ALTER TABLE `0_workorders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `0_workorders` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2011-02-18 13:11:03

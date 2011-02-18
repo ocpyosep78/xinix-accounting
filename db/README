@@ -1,0 +1,2 @@
+cara untuk reload database
+mysql -uroot -p frontaccount < frontaccount.sql
