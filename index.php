@@ -10,6 +10,7 @@
     See the License here <http://www.gnu.org/licenses/gpl-3.0.html>.
 ***********************************************************************/
 	$path_to_root=".";
+
 	if (!file_exists($path_to_root.'/config.php'))
 		header("Location: ".$path_to_root."/install/index.php");
 

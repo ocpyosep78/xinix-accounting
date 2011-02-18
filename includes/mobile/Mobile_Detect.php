@@ -8,11 +8,12 @@
  */
 
 class Mobile_Detect {
-    
+
     protected $accept;
     protected $userAgent;
-    
+
     protected $isMobile     = false;
+    protected $isIphone     = null;
     protected $isAndroid    = null;
     protected $isBlackberry = null;
     protected $isOpera      = null;
@@ -21,13 +22,13 @@ class Mobile_Detect {
     protected $isGeneric    = null;
 
     protected $devices = array(
-        "android"       => "android",
-        "blackberry"    => "blackberry",
-        "iphone"        => "(iphone|ipod)",
-        "opera"         => "opera mini",
-        "palm"          => "(avantgo|blazer|elaine|hiptop|palm|plucker|xiino)",
-        "windows"       => "windows ce; (iemobile|ppc|smartphone)",
-        "generic"       => "(kindle|mobile|mmp|midp|o2|pda|pocket|psp|symbian|smartphone|treo|up.browser|up.link|vodafone|wap)"
+            "android"       => "android",
+            "blackberry"    => "blackberry",
+            "iphone"        => "(iphone|ipod)",
+            "opera"         => "opera mini",
+            "palm"          => "(avantgo|blazer|elaine|hiptop|palm|plucker|xiino)",
+            "windows"       => "windows ce; (iemobile|ppc|smartphone)",
+            "generic"       => "(kindle|mobile|mmp|midp|o2|pda|pocket|psp|symbian|smartphone|treo|up.browser|up.link|vodafone|wap)"
     );
 
 
@@ -37,7 +38,8 @@ class Mobile_Detect {
 
         if (isset($_SERVER['HTTP_X_WAP_PROFILE'])|| isset($_SERVER['HTTP_PROFILE'])) {
             $this->isMobile = true;
-        } elseif (strpos($this->accept,'text/vnd.wap.wml') > 0 || strpos($accept,'application/vnd.wap.xhtml+xml') > 0) {
+//        } elseif (strpos($this->accept,'text/vnd.wap.wml') > 0 || strpos($accept,'application/vnd.wap.xhtml+xml') > 0) {
+        } elseif (strpos($this->accept,'text/vnd.wap.wml') > 0 || strpos($this->accept,'application/vnd.wap.xhtml+xml') > 0) {
             $this->isMobile = true;
         } else {
             foreach ($this->devices as $device => $regexp) {

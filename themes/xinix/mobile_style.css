@@ -22,11 +22,11 @@
 
 /* --- header --- */
 
-	#header { font-size:0.625em; line-height:1em; background:url(images/header-tail.gif) top repeat-x;}
+	#header { font-size:0.625em; line-height:1em; background:url(../../themes/xinix/mobile_images/header-tail.gif) top repeat-x;}
 	
-	#logo {padding:4px 0 151px 0; background:url(images/header-bg.jpg) no-repeat top center; text-align:center;}
+	#logo {padding:4px 0 151px 0; background:url(../../themes/xinix/mobile_images/header-bg.jpg) no-repeat top center; text-align:center}
 	
-	.menu {background:url(images/menu-bg.jpg) no-repeat top center; padding:8px 0 9px 0;}
+	.menu {background:url(../../themes/xinix/mobile_images/menu-bg.jpg) no-repeat top center; padding:8px 0 9px 0;}
 	.menu li {display:inline; text-transform:uppercase; padding-left:12px;}
 	.menu li a {color:#9ddeff; text-decoration:none;}
 	.menu .active a {color:#fff;}
@@ -45,8 +45,8 @@
 
 /* --- footer --- */
 	
-	#footer {height:67px; color:#fff; font-size:0.6875em; line-height:1.545em; text-align:center; background:url(images/footer-tail.gif) top repeat-x;}
-	#footer p { padding:16px 0 0 0; background:url(images/footer-bg.jpg) no-repeat top center; height:51px;}
+	#footer {height:67px; color:#fff; font-size:0.6875em; line-height:1.545em; text-align:center; background:url(../../themes/xinix/mobile_images/footer-tail.gif) top repeat-x; overflow: hidden}
+	#footer p { padding:16px 0 0 0; background:url(../../themes/xinix/mobile_images/footer-bg.jpg) no-repeat top center; height:51px;}
 	#footer p a {color:#9ddeff;}
 
 /* --- END footer --- */
@@ -71,3 +71,7 @@
 	#ContactForm button {background:none; border:none; color:#5db2e9; text-decoration:underline; font-size:1em;}
 	
 /* --- END Other --- */
+
+label {
+    display: block;
+}
