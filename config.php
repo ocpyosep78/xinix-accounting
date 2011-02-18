@@ -178,6 +178,17 @@ if (!isset($path_to_root) || isset($_GET['path_to_root']) || isset($_POST['path_
 	);
 */
 
+/**
+ * Xinix Technology addendum
+ * Add user
+ *
+ **/
+
+$app_config = array(
+    'theme' => 'xinix',
+    'base_url' => 'http://localhost/xinix-accounting',
+);
+
 	//MySQL Backup and Restore Settings
 
 if(isset($_SESSION["wa_current_user"])) {

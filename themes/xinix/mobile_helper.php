@@ -1,32 +1,31 @@
 <?php
-function theme_url() {
-    global  $path_to_root, $def_theme;
-    return "$path_to_root/themes/$def_theme";
-}
-
 function mobile_footer() {
-    $result = '<div id="footer">
-    <p>Copyright &copy; <a href="http://xinix.co.id">Xinix Technology</a> 2011<br/>Version 2.2.11   Build 18.02.2011</p>
-</div>';
-    return $result;
+    global $path_to_root;
+    include $path_to_root.'/themes/'.user_theme().'/views/common/mobile_footer.php';
 }
 
 function mobile_header() {
-    $result = '<div id="header">
-                <div id="logo">
-                    <a href="."><img alt="logo" src="'.theme_url().'/mobile_images/logo.jpg"/></a>
-                </div>
-                <div class="menu">'.
-//                    <ul>
-//                        <li class="active"><a href="index.html">Home</a></li>
-//                        <li><a href="about.html">About</a></li>
-//                        <li><a href="services.html">Services</a></li>
-//                        <li><a href="support.html">Support</a></li>
-//                        <li><a href="contacts.html">Contacts</a></li>
-//                    </ul>
-                '</div>
-            </div>';
-    return $result;
+    global $app_config, $path_to_root;
+
+    $app = $_SESSION['App'];
+
+    if (!empty($app)) {
+        $menu .= '<ul>';
+
+        $applications = $app->applications;
+        $sel_app = $app->get_selected_application();
+
+        foreach($applications as $app) {
+            $acc = access_string($app->name);
+            $menu .= '<li '.($sel_app == $app->id ? ('class="active"') : '').'>
+                    <a href="'.$app_config['base_url'].'/index.php?application='.$app->id.'" '.$acc[1].'>'.$acc[0].'</a></li>';
+        }
+
+        $menu .= '<li><a href="'.$app_config['base_url'].'/access/logout.php?">logout</a></li>';
+        $menu .= '</ul>';
+    }
+//
+    include $path_to_root.'/themes/'.user_theme().'/views/common/mobile_header.php';
 }
 
 ?>

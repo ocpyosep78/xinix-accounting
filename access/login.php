@@ -12,14 +12,14 @@
 if (!isset($path_to_root) || isset($_GET['path_to_root']) || isset($_POST['path_to_root']))
     die(_("Restricted access"));
 
-$def_theme = 'xinix';
+$def_theme = user_theme();
 
 include_once($path_to_root . "/includes/ui.inc");
 
 include_once($path_to_root . "/includes/mobile/Mobile_Detect.php");
 $detect = new Mobile_Detect();
 if ($detect->isMobile()) {
-    include_once($path_to_root.'/themes/'.$def_theme.'/views/access/mobile_login.php');
+    include_once($path_to_root . "/themes/".user_theme().'/views/access/mobile_login.php');
 } else {
     $js = "<script language='JavaScript' type='text/javascript'>
 function defaultCompany()

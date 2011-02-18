@@ -135,7 +135,6 @@
 			global $path_to_root;
 
 			$selected_app = $waapp->get_selected_application();
-
 			$img = "<img src='$path_to_root/themes/default/images/right.gif' style='vertical-align:middle;' width='17' height='17' border='0'>&nbsp;&nbsp;";
 			foreach ($selected_app->modules as $module)
 			{

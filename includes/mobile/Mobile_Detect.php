@@ -48,6 +48,9 @@ class Mobile_Detect {
                 }
             }
         }
+
+        // FIXME reekoheek cheat mobile
+//        $this->isMobile = true;
     }
 
 

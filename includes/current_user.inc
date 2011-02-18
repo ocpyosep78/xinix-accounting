@@ -369,7 +369,12 @@ function user_dec_sep()
 
 function user_theme()
 {
-	return $_SESSION["wa_current_user"]->prefs->get_theme();
+    global $app_config;
+    $theme = $app_config['theme'];
+    if (empty($app_config['theme'])) {
+        $theme = $_SESSION["wa_current_user"]->prefs->get_theme();
+    }
+	return $theme;
 }
 
 function user_pagesize()
