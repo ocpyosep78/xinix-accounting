@@ -3,8 +3,8 @@ function base_url() {
     return $GLOBALS['app_config']['base_url'];
 }
 
-function theme_url() {
-    return base_url(). "/themes/".user_theme();
+function theme_url($uri = '') {
+    return base_url(). "/themes/".user_theme().'/'.$uri;
 }
 
 function base_path() {

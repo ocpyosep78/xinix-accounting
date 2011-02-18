@@ -6,7 +6,7 @@ function mobile_footer() {
 
 function mobile_header() {
     global $app_config, $path_to_root;
-
+    
     $app = $_SESSION['App'];
 
     if (!empty($app)) {
