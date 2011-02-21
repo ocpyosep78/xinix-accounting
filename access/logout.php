@@ -12,7 +12,6 @@
 $page_security = 'SA_OPEN';
 $path_to_root="..";
 include($path_to_root . "/includes/session.inc");
-<<<<<<< HEAD
 
 include($path_to_root . "/includes/page/header.inc");
 page_header(_("Logout"), true, false, '', get_js_png_fix());
@@ -43,8 +42,6 @@ echo "</div></td>
 </table>
 <br>\n";
 end_page(false, true);
-=======
->>>>>>> 64fa20ef82554f54e83ab42e5e7604d6e6a62f05
 session_unset();
 session_destroy();
 header('Location: '.$GLOBALS['app_config']['base_url']);

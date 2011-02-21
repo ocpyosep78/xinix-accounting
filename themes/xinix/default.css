@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 body {
     background-color: #eee;
     background-image: url(images/body_bg.png);
@@ -737,7 +735,6 @@ div.note_msg {
     margin-bottom: 10px;
     width: 100%;
 }
-=======
 /*--------------------------------------------------\
 | default       |               | default.css       |
 |---------------------------------------------------|
@@ -1384,4 +1381,3 @@ div.note_msg {
 	margin-bottom: 10px;
 	width: 100%;
 }
->>>>>>> 64fa20ef82554f54e83ab42e5e7604d6e6a62f05

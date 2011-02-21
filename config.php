@@ -56,7 +56,7 @@ if (!isset($path_to_root) || isset($_GET['path_to_root']) || isset($_POST['path_
 	// Main Title
 	$app_title = "Xinix Accounting";
 	// application version
-	$version 		= "";
+	$version 		= "2.2.11";
 
 	// Build for development purposes
 	$build_version 	= date("d.m.Y", filemtime("$path_to_root/CHANGELOG.txt"));
