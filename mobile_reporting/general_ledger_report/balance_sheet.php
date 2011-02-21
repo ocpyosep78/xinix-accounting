@@ -1,3 +1,4 @@
+<?php print_r($arg->data['test']) ?>
 <form method="POST" action="mobile_show_balance_sheet.php">
     <button type="submit" name="repGL" id="repJournal" value="Display: Balance Sheet">
         <img src="<?php echo theme_url('/images/ok.gif') ?>" height="12" />

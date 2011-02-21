@@ -10,17 +10,23 @@
  * @author jafar
  */
 class Mobile_Report extends Controller {
+    var $view;
+
     function _pre() {
         mobile_header();
 
     }
 
     function _post() {
-        $f = theme_path('views/'.$_GET['c']);
+        
+        if (empty($this->view)) {
+            $this->view = $_GET['c'];
+        }
+        $f = theme_path('views/'.$this->view);
         if(file_exists($f)) {
             load($f, $this);
         } else {
-            load($_GET['c'], $this);
+            load($this->view, $this);
         }
 
 //        mobile_footer();

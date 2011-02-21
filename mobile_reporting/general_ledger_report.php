@@ -13,7 +13,12 @@ class General_Ledger_Report extends Mobile_Report {
     }
 
     function balance_sheet() {
+        $this->data['test'] = 'ini test';
 
+        if ($_POST) {
+            $this->view = 'mobile_reporting/general_ledger_report/coba';
+        }
+        
     }
 
     function gl_account_transactions() {
