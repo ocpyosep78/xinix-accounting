@@ -125,8 +125,9 @@ function page_header($title, $no_menu=false, $is_index=false, $onload="", $js=""
 	}
 	echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n";
 	echo "<html dir='" . $_SESSION['language']->dir . "' >\n";
-	echo "<head><title>$title</title>";
-	echo "<meta http-equiv='Content-type' content='text/html; charset=$encoding'>";
+	echo "<head><title>$title</title> \n";
+	echo "<meta http-equiv='Content-type' content='text/html; charset=$encoding'> \n";
+        echo "<link href='$local_path_to_root/themes/$theme/images/icon.ico' rel='shortcut icon' type='image/x-icon' > \n";
 	echo "<link href='$local_path_to_root/themes/$theme/default.css' rel='stylesheet' type='text/css'> \n";
 	send_scripts($js);
 

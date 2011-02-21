@@ -133,8 +133,10 @@ function hyperlink_back($center=true, $no_menu=true)
 	start_row();
 	if ($no_menu)
 		echo "<td align=center><a href='javascript:window.print();'>"._("Print")."</a></td>\n";
-	echo "<td align=center><a href='javascript:goBack();'>".($no_menu ? _("Close") : _("Back"))."</a></td>\n";
-	end_row();
+        echo '';
+	echo "<td align=center><div class=back><a href='javascript:goBack();'>".($no_menu ? _("Close") : _("Back"))."</a></div></td>\n";
+	echo '';
+        end_row();
 	end_table();
 	if ($center)
 		echo "</center>";

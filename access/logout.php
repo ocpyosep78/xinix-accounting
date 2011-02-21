@@ -12,13 +12,14 @@
 $page_security = 'SA_OPEN';
 $path_to_root="..";
 include($path_to_root . "/includes/session.inc");
+<<<<<<< HEAD
 
 include($path_to_root . "/includes/page/header.inc");
 page_header(_("Logout"), true, false, '', get_js_png_fix());
 
 echo "<table width='100%' border='0'>
   <tr>
-	<td align='center'><img src='$path_to_root/themes/default/images/logo_frontaccounting.png' alt='FrontAccounting' width='250' height='50' onload='fixPNG(this)' /></td>
+	<td align='center'><img src='$path_to_root/themes/xinix/images/logosmall.png' alt='FrontAccounting' width='250' height='50' onload='fixPNG(this)' /></td>
   </tr>
   <tr>
     <td>&nbsp;</td>
@@ -42,8 +43,11 @@ echo "</div></td>
 </table>
 <br>\n";
 end_page(false, true);
+=======
+>>>>>>> 64fa20ef82554f54e83ab42e5e7604d6e6a62f05
 session_unset();
 session_destroy();
+header('Location: '.$GLOBALS['app_config']['base_url']);
 ?>
 
 

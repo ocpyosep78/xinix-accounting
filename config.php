@@ -54,16 +54,16 @@ if (!isset($path_to_root) || isset($_GET['path_to_root']) || isset($_POST['path_
 		ini_set("log_errors", "On");
 	}		
 	// Main Title
-	$app_title = "FrontAccounting";
+	$app_title = "Xinix Accounting";
 	// application version
-	$version 		= "2.2.11";
+	$version 		= "";
 
 	// Build for development purposes
 	$build_version 	= date("d.m.Y", filemtime("$path_to_root/CHANGELOG.txt"));
 
 	// Powered by
-	$power_by 		= "FrontAccounting";
-	$power_url 		= "http://frontaccounting.com";
+	$power_by 		= "Xinix Technology";
+	$power_url 		= "http://www.xinix.co.id";
 
 	/* use popup windows for views */
 	$use_popup_windows = 1;
@@ -177,6 +177,17 @@ if (!isset($path_to_root) || isset($_GET['path_to_root']) || isset($_POST['path_
 			array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20),
 	);
 */
+
+/**
+ * Xinix Technology addendum
+ * Add user
+ *
+ **/
+
+$app_config = array(
+    'theme' => 'xinix',
+    'base_url' => 'http://andisusilo/xinix-accounting',
+);
 
 	//MySQL Backup and Restore Settings
 

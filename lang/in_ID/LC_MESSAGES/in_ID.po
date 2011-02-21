@@ -14,6 +14,9 @@ msgstr ""
 "X-Poedit-Basepath: c:\\Apache2\\htdocs\\account\n"
 "X-Poedit-SearchPath-0: c:\\Apache2\\htdocs\\account\n"
 
+msgid "Use popup window to display reports:"
+msgstr "sasasasa"
+
 # c:\Apache2\htdocs\account/config.php:59
 #: c:\Apache2\htdocs\account/config.php:65
 msgid "ea."
@@ -831,7 +834,7 @@ msgstr "Tunjukan Kode Barang:"
 #: c:\Apache2\htdocs\account/admin/display_prefs.php:70
 #: c:\Apache2\htdocs\account/includes/page/footer.inc:29
 msgid "Theme:"
-msgstr "Thema:"
+msgstr "The:"
 
 # c:\Apache2\htdocs\account/admin/display_prefs.php:75
 #: c:\Apache2\htdocs\account/admin/display_prefs.php:75

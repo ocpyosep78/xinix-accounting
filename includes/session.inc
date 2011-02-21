@@ -148,6 +148,8 @@ include_once($path_to_root . "/config_db.php");
 include_once($path_to_root . "/includes/ajax.inc");
 include_once($path_to_root . "/includes/ui/ui_msgs.inc");
 
+include_once($path_to_root . '/xinix/bootstrap.php');
+
 /*
 	Uncomment the setting below when using FA on shared hosting
 	to avoid unexpeced session timeouts.
@@ -207,17 +209,20 @@ ob_start('output_html',0);
 // colect all error msgs
 set_error_handler('error_handler' /*, errtypes */);
 
-if (!isset($_SESSION["wa_current_user"]))
-	$_SESSION["wa_current_user"] = new current_user();
+// reekoheek bilang ga penting!!!
+//if (!isset($_SESSION["wa_current_user"]))
+//	$_SESSION["wa_current_user"] = new current_user();
 
 // logout.php is the only page we should have always 
 // accessable regardless of access level and current login status.
+
 if (strstr($_SERVER['PHP_SELF'], 'logout.php') == false){
 
 	login_timeout();
 
-	if (!$_SESSION["wa_current_user"]->logged_in())
+	if (empty($_SESSION["wa_current_user"]) || !$_SESSION["wa_current_user"]->logged_in())
 	{
+        
 		// Show login screen
 		if (!isset($_POST["user_name_entry_field"]) or $_POST["user_name_entry_field"] == "")
 		{
@@ -232,6 +237,8 @@ if (strstr($_SERVER['PHP_SELF'], 'logout.php') == false){
 			exit;
 		} else {
 
+            $_SESSION["wa_current_user"] = new current_user();
+
 			$succeed = isset($db_connections[$_POST["company_login_name"]]) &&
 				$_SESSION["wa_current_user"]->login($_POST["company_login_name"],
 				$_POST["user_name_entry_field"], md5($_POST["password"]));
@@ -244,9 +251,11 @@ if (strstr($_SERVER['PHP_SELF'], 'logout.php') == false){
 			}
 			$lang = &$_SESSION['language'];
 			$lang->set_language($_SESSION['language']->code);
+            header('Location: '.$GLOBALS['app_config']['base_url']);
 		}
-	} else
+	} else {
 		set_global_connection();
+    }
 
 	if (!$_SESSION["wa_current_user"]->old_db)
 		include_once($path_to_root . '/company/'.user_company().'/installed_extensions.php');
@@ -255,6 +264,7 @@ if (strstr($_SERVER['PHP_SELF'], 'logout.php') == false){
 		$_SESSION["App"] = new front_accounting();
 		$_SESSION["App"]->init();
 	}
+
 }
 
 // POST vars cleanup needed for direct reuse.
