@@ -24,6 +24,15 @@ img {vertical-align:top;}
 
 #header { font-size:0.625em; line-height:1em; background:url(./mobile_images/header-tail.gif) top repeat-x;}
 
+.head {border-top: 2px solid #666; border-bottom: 2px solid #666;}
+
+.header {padding-top: 5px; padding-bottom: 2px;}
+
+.acc_header {border-bottom: 2px solid #999; padding-top: 5px;}
+.acc_footer {border-top: 2px solid #999; padding-bottom: 3px;}
+
+.balance {text-align: right; padding-right: 5px;}
+
 #logo {padding:4px 0 151px 0; background:url(./mobile_images/header-bg.jpg) no-repeat top center; text-align:center}
 
 .menu {background:url(./mobile_images/menu-bg.jpg) no-repeat top center; padding:8px 0 9px 0;}

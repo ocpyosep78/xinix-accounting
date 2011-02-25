@@ -186,7 +186,7 @@ if (!isset($path_to_root) || isset($_GET['path_to_root']) || isset($_POST['path_
 
 $app_config = array(
     'theme' => 'xinix',
-    'base_url' => 'http://localhost/xinix-accounting',
+    'base_url' => 'http://192.168.1.101/xinix-accounting',
 );
 
 	//MySQL Backup and Restore Settings
