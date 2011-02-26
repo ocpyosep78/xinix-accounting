@@ -146,13 +146,15 @@ button img, span {
     width: 100%;
     background-image: url(images/footer.png);
     background-repeat: repeat-x;
-    font-weight: bold;
 }
 
 .bottomBarCell {
     font-size: 10px;
     line-height: 12px;
     padding-right: 30px;
+    text-shadow: #ccc 0px 1px 2px;
+    font-weight: bold;
+    padding-top: 9px;
 }
 
 .bottomBar2 {
