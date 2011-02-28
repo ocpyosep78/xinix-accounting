@@ -23,7 +23,7 @@ $db_connections = array (
 		'host' => 'localhost',
 		'dbuser' => 'root',
 		'dbpassword' => 'password',
-		'dbname' => 'frontaccount',
+		'dbname' => 'frontaccounting',
 		'tbpref' => '0_')
 
 	);

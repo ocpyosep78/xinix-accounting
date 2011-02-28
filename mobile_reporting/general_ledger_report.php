@@ -120,6 +120,26 @@ class General_Ledger_Report extends Mobile_Report {
         return $classes;
     }
 
+    function get_current_fiscal() {
+
+        global $path_to_root;
+	include_once($path_to_root . "/admin/db/company_db.inc");
+
+	$myrow = get_current_fiscalyear();
+	$begin = sql2date($myrow['begin']);
+        $end   = sql2date($myrow['end']);
+
+        if ($myrow['closed'] == 0)
+            $active = "Active";
+        else
+            $active = "Not Active";
+
+        $fiscal = $begin." - ".$end." (".$active.")";
+
+        return $fiscal;
+
+    }
+
     function get_date($tgl, $bln, $thn) {
 
         if (strlen($tgl) == 1)
@@ -143,6 +163,7 @@ class General_Ledger_Report extends Mobile_Report {
 
             $from = $this->get_date($_POST['stgl'], $_POST['sbln'], $_POST['sthn']);
             $to = $this->get_date($_POST['etgl'], $_POST['ebln'], $_POST['ethn']);
+            $fiscal = $this->get_current_fiscal();
             $comment = $_POST['comment'];
 
             $calc_open = $this->calc_period = 0.0;
@@ -152,6 +173,7 @@ class General_Ledger_Report extends Mobile_Report {
 
             $this->from = $from;
             $this->to   = $to;
+            $this->fiscal = $fiscal;
             
             $this->classes = $this->get_classes($from, $to);
 
