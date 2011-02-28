@@ -611,7 +611,7 @@ function date_cells($label, $name, $title = null, $check=null, $inc_days=0,
 
 	$aspect = $check ? 'aspect="cdate"' : '';
 	if ($check && (get_post($name) != Today()))
-		$aspect .= ' style="color:#FF0000"';
+		$aspect .= ' style="color:#09C"';
 
 	default_focus($name);
 

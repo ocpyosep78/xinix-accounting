@@ -1,3 +1,4 @@
+
 ﻿msgid ""
 msgstr ""
 "Project-Id-Version: FrontAccounting\n"
@@ -14,8 +15,10 @@ msgstr ""
 "X-Poedit-Basepath: c:\\Apache2\\htdocs\\account\n"
 "X-Poedit-SearchPath-0: c:\\Apache2\\htdocs\\account\n"
 
-msgid "Use popup window to display reports:"
-msgstr "sasasasa"
+# c:\Apache2\htdocs\account/config.php:128
+#: c:\Apache2\htdocs\account/config.php:128
+msgid "Printing profile"
+msgstr "ea."
 
 # c:\Apache2\htdocs\account/config.php:59
 #: c:\Apache2\htdocs\account/config.php:65
@@ -823,6 +826,11 @@ msgstr "Bermacam-macam"
 #: c:\Apache2\htdocs\account/admin/display_prefs.php:66
 msgid "Show GL Information:"
 msgstr "Tunjukan Informasi GL:"
+
+# c:\Apache2\htdocs\account/admin/display_prefs.php:72
+#: c:\Apache2\htdocs\account/admin/display_prefs.php:72
+msgid "Start-up Tab:"
+msgstr "asfdasd"
 
 # c:\Apache2\htdocs\account/admin/display_prefs.php:68
 #: c:\Apache2\htdocs\account/admin/display_prefs.php:68
