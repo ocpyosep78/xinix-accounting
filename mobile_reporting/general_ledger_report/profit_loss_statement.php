@@ -1,53 +1,78 @@
-<form method="POST" action="mobile_show_profit_loss.php">
-    <button type="submit" name="repGL" id="repJournal" value="Display: GL Account Transactions">
+<form method="POST" action="<?php $arg->view; ?>">
+    <button type="submit" name="repProfit" id="repJournal" value="Display: Profit and Loss Statement">
         <img src="<?php echo theme_url('/images/ok.gif') ?>" height="12" />
-        <span>Display: GL Account Transactions</span>
+        <span>Display: Profit and Loss Statement</span>
     </button>
     <br/><br/>
     Start Date:
     <br/>
-    <input type="text" name="start_date" value="<?php echo date("m/d/Y"); ?>"/>
-    <a href="javascript:date_picker(document.forms[0].start_date);">
-        <img src="<?php echo theme_url('images/cal.gif') ?>" width="16" height="16" border="0" alt="Click here to pick up the date"/>
-    </a>
+    <select name="stgl">
+        <?php
+            for($tgl=1;$tgl<=31;$tgl++) {
+        ?>
+                <option value="<?php echo $tgl; ?>"><?php echo $tgl; ?></option>
+        <?php
+            }
+        ?>
+    </select>
+    <select name="sbln">
+        <?php
+            for($bln=1;$bln<=12;$bln++) {
+        ?>
+                <option value="<?php echo $bln; ?>"><?php echo $bln; ?></option>
+        <?php
+            }
+        ?>
+    </select>
+    <select name="sthn">
+        <?php
+            $now = date("Y");
+            for($thn=2000;$now>=$thn;$now--) {
+        ?>
+                <option value="<?php echo $now; ?>"><?php echo $now; ?></option>
+        <?php
+            }
+        ?>
+    </select>
     <br/><br/>
     End Date:
     <br/>
-    <input type="text" name="end_date" value="<?php echo date("m/d/Y"); ?>"/>
-    <a href="javascript:date_picker(document.forms[0].end_date);">
-        <img src="<?php echo theme_url('images/cal.gif') ?>" width="16" height="16" border="0" alt="Click here to pick up the date"/>
-    </a>
+    <select name="etgl">
+        <?php
+            for($tgl=1;$tgl<=31;$tgl++) {
+        ?>
+                <option value="<?php echo $tgl; ?>"><?php echo $tgl; ?></option>
+        <?php
+            }
+        ?>
+    </select>
+    <select name="ebln">
+        <?php
+            for($bln=1;$bln<=12;$bln++) {
+        ?>
+                <option value="<?php echo $bln; ?>"><?php echo $bln; ?></option>
+        <?php
+            }
+        ?>
+    </select>
+    <select name="ethn">
+        <?php
+            $now = date("Y");
+            for($thn=2000;$now>=$thn;$now--) {
+        ?>
+                <option value="<?php echo $now; ?>"><?php echo $now; ?></option>
+        <?php
+            }
+        ?>
+    </select>
     <br/><br/>
     Compare to:
     <br/>
     <span id="type_com">
         <select name="compare">
-            <option value="">Accumulated</option>
-        </select>
-    </span>
-    <br/><br/>
-    Dimension:
-    <br/>
-    <span id="type_dim">
-        <select name="dimension">
-            <option value="">No Dimension Filter</option>
-        </select>
-    </span>
-    <br/><br/>
-    Decimal values:
-    <br/>
-    <span id="type_dec">
-        <select name="decimal">
-            <option value="no">No</option>
-            <option value="yes">Yes</option>
-        </select>
-    </span>
-    <br/><br/>
-    Graphics:
-    <br/>
-    <span id="type_graph">
-        <select name="graphic">
-            <option value="">No Graphics</option>
+            <option value="0">Accumulated</option>
+            <option value="1">Period Y-1</option>
+            <option value="2">Budget</option>
         </select>
     </span>
     <br/><br/>

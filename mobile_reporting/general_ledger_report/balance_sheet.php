@@ -66,44 +66,6 @@
         ?>
     </select>
     <br/><br/>
-    <!--Dimension:
-    <br/>
-    <span id="type_dim">
-        <select name="dimension">
-            <option value="">No Dimension Filter</option>
-            <?php
-            //foreach($arg->data['dimensions']['id'] as $id) {
-            ?>
-            <option value="<?php echo $id; ?>"><?php echo $arg->data['dimensions']['name']; ?></option>
-            <?php
-            //}
-            ?>
-        </select>
-    </span>
-    <br/><br/>
-    Decimal values:
-    <br/>
-    <span id="type_dec">
-        <select name="decimal">
-            <option value="no">No</option>
-            <option value="yes">Yes</option>
-        </select>
-    </span>
-    <br/><br/>
-    Graphics:
-    <br/>
-    <span id="type_graph">
-        <select name="graphic">
-            <option value="no" selected="selected">No Graphics</option>
-            <option value="vertical">Vertical Bars</option>
-            <option value="horizontal">Horizontal Bars</option>
-            <option value="dot">Dots</option>
-            <option value="line">Lines</option>
-            <option value="pie">Pie</option>
-            <option value="donut">Donut</option>
-        </select>
-    </span>
-    <br/><br/>-->
     Comments:
     <br/>
     <textarea name="comment" rows="4" cols="30"></textarea>

@@ -288,12 +288,12 @@ $opts = array(		// default options
 );
 // ------ merge options with defaults ----------
 	if($options != null)
-		$opts = array_merge($opts, $options);
-	$select_submit =  $opts['select_submit'];
-	$spec_id = $opts['spec_id'];
-	$spec_option = $opts['spec_option'];
-	$disabled = $opts['disabled'] ? "disabled" : '';
-	$multi = $opts['multi'];
+            $opts = array_merge($opts, $options);
+        $select_submit =  $opts['select_submit'];
+        $spec_id = $opts['spec_id'];
+        $spec_option = $opts['spec_option'];
+        $disabled = $opts['disabled'] ? "disabled" : '';
+        $multi = $opts['multi'];
 
 	if ($selected_id == null) {
 		$selected_id = get_post($name, $opts['default']);
