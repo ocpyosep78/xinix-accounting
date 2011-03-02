@@ -12,8 +12,11 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/home/andi/www/xinix-accounting/includes/lang/gettext.php</file>
         <file>file:/home/andi/www/xinix-accounting/themes/xinix/default.css</file>
         <file>file:/home/andi/www/xinix-accounting/themes/default/default.css</file>
         <file>file:/home/andi/www/xinix-accounting/access/login.php</file>
+        <file>file:/home/andi/www/xinix-accounting/themes/xinix/renderer.php</file>
+        <file>file:/home/andi/www/xinix-accounting/install/save.php</file>
     </open-files>
 </project-private>
