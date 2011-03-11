@@ -52,9 +52,9 @@ if($error_logfile != '') {
     ini_set("log_errors", "On");
 }		
 // Main Title
-$app_title = "Xinix Accounting";
+$app_title = "Accounting System";
 // application version
-$version 		= "2.2.11";
+$version 		= "1.0";
 
 // Build for development purposes
 $build_version 	= date("d.m.Y", filemtime("$path_to_root/CHANGELOG.txt"));
