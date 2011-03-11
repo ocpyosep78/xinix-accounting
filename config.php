@@ -183,8 +183,8 @@ $graph_skin 	= 1;
  **/
 
 $app_config = array(
-        'theme' => 'xinix',
-        'base_url' => 'http://andisusilo/xinix-accounting',
+    'theme' => 'xinix',
+    'base_url' => 'http://192.168.1.106/xinix-accounting',
 );
 
 //MySQL Backup and Restore Settings
