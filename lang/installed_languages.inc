@@ -12,8 +12,8 @@
 
 $installed_languages = array (
 	0 => array ('code' => 'en_GB', 'name' => 'English', 'encoding' => 'iso-8859-1'),
-		array ('code' => 'in_ID', 'name' => 'Indonesia', 'encoding' => 'iso-8859-1'),
+		array ('code' => 'id_ID', 'name' => 'Indonesia', 'encoding' => 'UTF8'),
 	);
 
-$dflt_lang = 'in_ID';
+$dflt_lang = 'id_ID';
 ?>

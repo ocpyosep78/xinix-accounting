@@ -65,7 +65,7 @@ function set_fullmode() {
     echo "</head>\n";
 
     echo "<body id='loginscreen' $onload>\n";
-    echo "<table class='titletext'><tr><td>$title</td></tr></table>\n";
+    echo "<table class='titletext'><tr><td></td></tr></table>\n";
 
     div_start('_page_body');
     br();
@@ -75,7 +75,7 @@ function set_fullmode() {
     start_row();
     echo "<td align='center' colspan=2>";
     if (!$login_timeout) { // FA logo
-        echo "<a target='_blank' href='$power_url'><img src='$path_to_root/themes/$def_theme/images/logo_frontaccounting.png' alt='FrontAccounting' height='50' onload='fixPNG(this)' border='0' /></a>";
+        echo "<a target='_blank' href='$power_url'><img src='$path_to_root/themes/$def_theme/images/logosmall.png' alt='XinixAccounting' height='50' onload='fixPNG(this)' border='0' /></a>";
     } else {
         echo "<font size=5>"._('Authorization timeout')."</font>";
     }
@@ -101,6 +101,9 @@ function set_fullmode() {
         else
             $coy = $def_coy;
         echo "<tr><td>"._("Company")."</td><td><select name='company_login_name'>\n";
+        for ($i = 0;
+        $i < count($db_connections);
+        $i++)
         for ($i = 0; $i < count($db_connections); $i++)
             echo "<option value=$i ".($i==$coy ? 'selected':'') .">" . $db_connections[$i]["name"] . "</option>";
         echo "</select>\n";
@@ -113,7 +116,6 @@ function set_fullmode() {
             .($login_timeout ? '':" onclick='set_fullmode();'")." /></center>\n";
 
     foreach($_SESSION['timeout']['post'] as $p => $val) {
-        // add all request variables to be resend together with login data
         if (!in_array($p, array('ui_mode', 'user_name_entry_field',
         'password', 'SubmitUser', 'company_login_name')))
             echo "<input type='hidden' name='$p' value='$val'>";
@@ -128,14 +130,7 @@ function set_fullmode() {
     //]]>
     </script>";
     div_end();
-    echo "<table class='bottomBar'>\n";
-    echo "<tr>";
-    if (isset($_SESSION['wa_current_user']))
-        $date = Today() . " | " . Now();
-    else
-        $date = date("m/d/Y") . " | " . date("h.i am");
-    echo "<td class='bottomBarCell'>$date</td>\n";
-    echo "</tr></table>\n";
+
     echo "<table class='footer'>\n";
     echo "<tr>\n";
     echo "<td><a target='_blank' href='$power_url' tabindex='-1'>$app_title $version - " . _("Theme:") . " " . $def_theme . "</a></td>\n";
@@ -144,6 +139,14 @@ function set_fullmode() {
     echo "<td><a target='_blank' href='$power_url' tabindex='-1'>$power_by</a></td>\n";
     echo "</tr>\n";
     echo "</table><br><br>\n";
+    echo "<table class='bottomBar'>\n";
+    echo "<tr>";
+    if (isset($_SESSION['wa_current_user']))
+        $date = Today() . " | " . Now();
+    else
+        $date = date("m/d/Y") . " | " . date("h.i am");
+    echo "<td class='bottomBarCell'>$date</td>\n";
+    echo "</tr></table>\n";
     echo "</body></html>\n";
 }
 ?>
