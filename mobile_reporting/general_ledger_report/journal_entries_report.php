@@ -1,3 +1,4 @@
+<?php $last_typeno = 0 ?>
 <style type="text/css">@import url("../themes/xinix/mobile_style.php");</style>
 <table cellpadding="0" cellspacing="0" width="100%">
     <tr>
@@ -38,31 +39,28 @@
                     <td class="head" width="10%">Credit</td>
                 </tr>
 
-                <?php foreach($arg->journal as $journal): ?>
+                <?php foreach ($arg->journal as $journal): ?>
 
-                    <?php
-                        $typeno = $type = 0;
-                        if ($type != $journal['type'] || $typeno != $journal['typeno']) {
-                    ?>
+                <?php if ($last_typeno != $journal['typeno']): ?>
+                <?php $last_typeno = $journal['typeno'] ?>
+                        <tr>
+                            <td width="15%"><?php echo $journal['trans_name'] . " # " . $journal['typeno'] ?></td>
+                            <td width="45%"><?php echo $journal['reference'] ?></td>
+                            <td width="10%"><?php echo $journal['tran_date'] ?></td>
+                            <td width="10%"><?php echo $journal['coms'] ?></td>
+                            <td width="10%"><?php echo "" ?></td>
+                            <td width="10%"><?php echo "" ?></td>
+                        </tr>
+                <?php endif ?>
 
-                <tr>
-                    <td width="15%"><?php echo $journal['trans_name']." # ".$journal['typeno'] ?></td>
-                    <td width="45%"><?php echo $journal['reference'] ?></td>
-                    <td width="10%"><?php echo $journal['tran_date'] ?></td>
-                    <td width="10%"><?php echo $journal['coms'] ?></td>
-                    <td width="10%"><?php echo "" ?></td>
-                    <td width="10%"><?php echo "" ?></td>
-                </tr>
-
-                    <?php } ?>
-                <tr>
-                    <td width="15%"><?php echo $journal['account'] ?></td>
-                    <td width="45%"><?php echo $journal['account_name'] ?></td>
-                    <td width="10%"><?php echo "" ?></td>
-                    <td width="10%"><?php echo $journal['memo'] ?></td>
-                    <td width="10%" class="balance"><?php echo $journal['debit'] ?></td>
-                    <td width="10%" class="balance"><?php echo $journal['credit'] ?></td>
-                </tr>
+                        <tr>
+                            <td width="15%"><?php echo $journal['account'] ?></td>
+                            <td width="45%"><?php echo $journal['account_name'] ?></td>
+                            <td width="10%"><?php echo "" ?></td>
+                            <td width="10%"><?php echo $journal['memo'] ?></td>
+                            <td width="10%" class="balance"><?php echo $journal['debit'] ?></td>
+                            <td width="10%" class="balance"><?php echo $journal['credit'] ?></td>
+                        </tr>
 
                 <?php endforeach ?>
 

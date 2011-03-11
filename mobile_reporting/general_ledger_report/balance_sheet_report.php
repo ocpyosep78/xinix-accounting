@@ -38,50 +38,54 @@
                     </tr>
 
                     <?php foreach ($class['subclasses'] as $subclass): ?>
+                        <?php $convert = get_class_type_convert($class['ctype']) ?>
+                        <?php if($subclass['total_open'] != 0): ?>
                         <tr>
                             <td class="acc_header" colspan="5"><?php echo $subclass['name'] ?></td>
                         </tr>
 
                         <?php foreach ($subclass['accounts'] as $accounts): ?>
+                            <?php if($accounts['open_balance'] != 0): ?>
                             <tr>
                                 <td width="10%"><?php echo $accounts['account_code'] ?></td>
                                 <td width="60%"><?php echo $accounts['account_name'] ?></td>
-                                <td width="10%" class="balance"><?php echo $accounts['open_balance'] ?></td>
-                                <td width="10%" class="balance"><?php echo $accounts['period'] ?></td>
-                                <td width="10%" class="balance"><?php echo $accounts['close_balance'] ?></td>
+                                <td width="10%" class="balance"><?php echo number_format($accounts['open_balance']) ?></td>
+                                <td width="10%" class="balance"><?php echo number_format($accounts['period']) ?></td>
+                                <td width="10%" class="balance"><?php echo number_format($accounts['close_balance']) ?></td>
                             </tr>
+                            <?php endif ?>
                         <?php endforeach ?>
 
                         <tr>
                             <td class="acc_footer" colspan="2">Total <?php echo $subclass['name'] ?></td>
-                            <td width="10%" class="acc_footer balance"><?php echo $subclass['total_open'] ?></td>
-                            <td width="10%" class="acc_footer balance"><?php echo $subclass['total_period'] ?></td>
-                            <td width="10%" class="acc_footer balance"><?php echo $subclass['total_close'] ?></td>
+                            <td width="10%" class="acc_footer balance"><?php echo number_format($subclass['total_open']) ?></td>
+                            <td width="10%" class="acc_footer balance"><?php echo number_format($subclass['total_period']) ?></td>
+                            <td width="10%" class="acc_footer balance"><?php echo number_format($subclass['total_close']) ?></td>
                         </tr>
-
+                        <?php endif ?>
                     <?php endforeach ?>
 
                     <tr>
                         <td class="acc_footer" colspan="2"><strong>Total <?php echo $class['class_name'] ?></strong></td>
-                        <td width="10%" class="acc_footer balance"><strong><?php echo $class['total_open'] ?></strong></td>
-                        <td width="10%" class="acc_footer balance"><strong><?php echo $class['total_period'] ?></strong></td>
-                        <td width="10%" class="acc_footer balance"><strong><?php echo $class['total_close'] ?></strong></td>
+                        <td width="10%" class="acc_footer balance"><strong><?php echo number_format($class['total_open'] * $convert) ?></strong></td>
+                        <td width="10%" class="acc_footer balance"><strong><?php echo number_format($class['total_period'] * $convert) ?></strong></td>
+                        <td width="10%" class="acc_footer balance"><strong><?php echo number_format($class['total_close'] * $convert) ?></strong></td>
                     </tr>
 
                 <?php endforeach ?>
 
                     <tr>
                         <td colspan="2">Calculated Return</td>
-                        <td width="10%" class="balance"><?php echo $arg->calculated_open ?></td>
-                        <td width="10%" class="balance"><?php echo $arg->calculated_period ?></td>
-                        <td width="10%" class="balance"><?php echo $arg->calculated_close ?></td>
+                        <td width="10%" class="balance"><?php echo number_format($arg->calculated_open) ?></td>
+                        <td width="10%" class="balance"><?php echo number_format($arg->calculated_period) ?></td>
+                        <td width="10%" class="balance"><?php echo number_format($arg->calculated_close) ?></td>
                     </tr>
 
                     <tr>
                         <td colspan="2"><strong>Total Liabilities and Equities</strong></td>
-                        <td width="10%" class="balance"><strong><?php echo $arg->topen ?></strong></td>
-                        <td width="10%" class="balance"><strong><?php echo $arg->tperiod ?></strong></td>
-                        <td width="10%" class="balance"><strong><?php echo $arg->tclose ?></strong></td>
+                        <td width="10%" class="balance"><strong><?php echo number_format($arg->topen) ?></strong></td>
+                        <td width="10%" class="balance"><strong><?php echo number_format($arg->tperiod) ?></strong></td>
+                        <td width="10%" class="balance"><strong><?php echo number_format($arg->tclose) ?></strong></td>
                     </tr>
 
             </table>

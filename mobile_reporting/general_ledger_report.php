@@ -16,14 +16,14 @@ class General_Ledger_Report extends Mobile_Report {
 
     function get_close_balance($open_balance, $period_balance, $convert) {
         
-        $close_balance = ($period_balance + $open_balance) * $convert;
+        $close_balance = ($period_balance + $open_balance);
 
         return $close_balance;
     }
 
     function get_period_balance($account, $convert, $from='', $to='') {
         
-        $period_balance = get_gl_trans_from_to($from, $to, $account['account_code'], '', '');
+        $period_balance = get_gl_trans_from_to($from, $to, $account['account_code']);
         $period = $period_balance * $convert;
 
         return $period;
@@ -37,7 +37,7 @@ class General_Ledger_Report extends Mobile_Report {
         return $open;
     }
 
-    function get_accumulated($begin, $to, $account, $compare, $convert) {
+    function get_accumulated($begin, $end, $account, $compare, $convert) {
 
         if ($compare == 2)
             $acc_balance = get_budget_trans_from_to($begin, $end, $account["account_code"]);
@@ -50,7 +50,7 @@ class General_Ledger_Report extends Mobile_Report {
         
     }
 
-    function get_accounts($subclass, $ctype='', $from='', $to='', $compare='') {
+    function get_accounts($subclass, $ctype='', $from='', $to='', $compare='', $begin='', $end='') {
         
         $accounts = array();
 
@@ -62,7 +62,7 @@ class General_Ledger_Report extends Mobile_Report {
             $account['open_balance'] = $this->get_open_balance($account, $convert, $from);
             $account['period'] = $this->get_period_balance($account, $convert, $from, $to);
             $account['close_balance'] = $this->get_close_balance($account['open_balance'], $account['period'], $convert);
-            $account['acc'] = $this->get_accumulated($from, $to, $account, $compare, $convert);
+            $account['acc'] = $this->get_accumulated($begin, $end, $account, $compare, $convert);
             $account['achieved'] = $this->get_achieve($account['period'], $account['acc']);
 
             $total_open_balance = ($account['open_balance'] + $total_open_balance) * $convert;
@@ -79,7 +79,7 @@ class General_Ledger_Report extends Mobile_Report {
         
     }
 
-    function get_subclasses($class, $from='', $to='', $compare='') {
+    function get_subclasses($class, $from='', $to='', $compare='', $begin='', $end='') {
         
         $subclasses = array();
 
@@ -88,7 +88,7 @@ class General_Ledger_Report extends Mobile_Report {
 
             $convert = get_class_type_convert($class['ctype']);
             
-            $subclass['accounts'] = $this->get_accounts($subclass, $class['ctype'], $from, $to, $compare);
+            $subclass['accounts'] = $this->get_accounts($subclass, $class['ctype'], $from, $to, $compare, $begin, $end);
 
             $total_open   = 0;
             $total_period = 0;
@@ -97,10 +97,10 @@ class General_Ledger_Report extends Mobile_Report {
 
             foreach ($subclass['accounts'] as $account) {
                 
-                $total_open   += $account['open_balance'] * $convert;
-                $total_period += $account['period'] * $convert;
-                $total_close  += $account['close_balance'] * $convert;
-                $total_acc    += $account['acc'] * $convert;
+                $total_open   += $account['open_balance'];
+                $total_period += $account['period'];
+                $total_close  += $account['close_balance'];
+                $total_acc    += $account['acc'];
                 $total_achieved = $this->get_achieve($total_period, $total_acc);
                 
             }
@@ -119,13 +119,9 @@ class General_Ledger_Report extends Mobile_Report {
         
     }
 
-    function get_classes($from='', $to='', $balance='', $compare='') {
+    function get_classes($from='', $to='', $begin='', $end='', $balance='', $compare='') {
         
         $classresult = get_account_classes(false, $balance);
-
-        $equity_open = $equity_period = 0.0;
-        $liability_open = $liability_period = 0.0;
-        $econvert = $lconvert = 0;
 
         while ($row = db_fetch($classresult)) {
 
@@ -133,7 +129,7 @@ class General_Ledger_Report extends Mobile_Report {
 
             $convert = get_class_type_convert($class['ctype']);
 
-            $class['subclasses'] = $this->get_subclasses($class, $from, $to, $compare);
+            $class['subclasses'] = $this->get_subclasses($class, $from, $to, $compare, $begin, $end);
 
             $total_open   = 0;
             $total_period = 0;
@@ -150,11 +146,11 @@ class General_Ledger_Report extends Mobile_Report {
 
             }
 
-            $class['total_open'] = $total_open;
-            $class['total_period'] = $total_period;
-            $class['total_close'] = $total_close;
-            $class['total_acc'] = $total_acc;
-            $class['total_achieved'] = $total_achieved;
+            $class['total_open']    = $total_open;
+            $class['total_period']  = $total_period;
+            $class['total_close']   = $total_close;
+            $class['total_acc']     = $total_acc;
+            $class['total_achieved']= $total_achieved;
 
             if ($class['ctype'] == CL_EQUITY)
             {
@@ -162,9 +158,9 @@ class General_Ledger_Report extends Mobile_Report {
                 $equity_period += $total_period;
                 $econvert = $convert;
 
-                $class['equity_open'] = $equity_open;
+                $class['equity_open']   = $equity_open;
                 $class['equity_period'] = $equity_period;
-                $class['econvert'] = $econvert;
+                $class['econvert']      = $econvert;
             }
             elseif ($class['ctype'] == CL_LIABILITIES)
             {
@@ -172,9 +168,9 @@ class General_Ledger_Report extends Mobile_Report {
                 $liability_period += $total_period;
                 $lconvert = $convert;
 
-                $class['liability_open'] = $liability_open;
-                $class['liability_period'] = $liability_period;
-                $class['lconvert'] = $lconvert;
+                $class['liability_open']    = $liability_open;
+                $class['liability_period']  = $liability_period;
+                $class['lconvert']          = $lconvert;
             }
 
             $classes[] = $class;
@@ -219,20 +215,23 @@ class General_Ledger_Report extends Mobile_Report {
 
     }
 
-    function get_compare($from, $to, $compare) {
+    function get_compare_to($from, $to, $compare) {
 
-        $compares = array();
+        $compare_to = array();
 
         if ($compare == 0 || $compare == 2)
 	{
 		$end = $to;
 		if ($compare == 2)
 		{
-			$begin = $from;
-			$header = _('Budget');
+                    $begin = $from;
+                    $header = _('Budget');
 		}
 		else
-			$begin = begin_fiscalyear();
+                {
+                    $begin = begin_fiscalyear();
+                    $header = _('Accumulated');
+                }
 	}
 	elseif ($compare == 1)
 	{
@@ -242,13 +241,14 @@ class General_Ledger_Report extends Mobile_Report {
 	}
 
         if (isset($header)) {
-            $compares['header'] = $header." :";
-            $compares['period'] = $begin." - ".$end;
+            $compare_to['header'] = $header;
+            $compare_to['begin']  = $begin;
+            $compare_to['end']    = $end;
         }
         else
-            $compares = "";
+            $compare_to = "";
 
-        return $compares;
+        return $compare_to;
 
     }
 
@@ -284,8 +284,8 @@ class General_Ledger_Report extends Mobile_Report {
 
         $trans = get_gl_transactions($from, $to, -1, null, 0, 0, $filtertype);
         while($row = db_fetch($trans)) {
-
-            if($type != $row['type'] || $typeno != $row['type_no']) {
+            if($type != $row['type'] || $typeno != $row['type_no'])
+            {
 
                 $typeno     = $row['type_no'];
                 $type       = $row['type'];
@@ -338,6 +338,28 @@ class General_Ledger_Report extends Mobile_Report {
 
     }
 
+    function get_chart_account() {
+
+        $accounts = array();
+
+        $sql = "SELECT chart.account_code, chart.account_name, type.name, chart.inactive, type.id
+                FROM ".TB_PREF."chart_master chart,".TB_PREF."chart_types type
+                WHERE chart.account_type=type.id";
+        $result = db_query($sql);
+        while($row = db_fetch($result)) {
+
+            $account['code'] = $row['account_code'];
+            $account['name'] = $row['account_name'];
+            $account['type'] = $row['name'];
+
+            $accounts[] = $account;
+
+        }
+
+        return $accounts;
+
+    }
+
     function balance_sheet() {
         global $comp_path, $path_to_root;
 
@@ -346,6 +368,9 @@ class General_Ledger_Report extends Mobile_Report {
             $this->company = get_company_pref('use_dimension');
 
             $calculated_open = $calculated_period = 0.0;
+            $equity_open = $equity_period = 0.0;
+            $liability_open = $liability_period = 0.0;
+            $econvert = $lconvert = 0;
 
             $from = $this->get_date($_POST['stgl'], $_POST['sbln'], $_POST['sthn']);
             $to = $this->get_date($_POST['etgl'], $_POST['ebln'], $_POST['ethn']);
@@ -356,7 +381,7 @@ class General_Ledger_Report extends Mobile_Report {
             $this->to   = $to;
             $this->fiscal = $fiscal;
 
-            $this->classes = $this->get_classes($from, $to, "1");
+            $this->classes = $this->get_classes($from, $to, "", "", "1");
 
             $topen   = 0;
             $tperiod = 0;
@@ -365,6 +390,12 @@ class General_Ledger_Report extends Mobile_Report {
             
             foreach($this->classes as $class) {
 
+                if ($class['lconvert'] == 1)
+                {
+                    $class['total_open'] *= -1;
+                    $class['total_period'] *= -1;
+                }
+
                 $calculated_open += $class['total_open'];
                 $calculated_period += $class['total_period'];
                 $calculated_close = $calculated_open + $calculated_period;
@@ -372,12 +403,6 @@ class General_Ledger_Report extends Mobile_Report {
                 $this->calculated_open = $calculated_open;
                 $this->calculated_period = $calculated_period;
                 $this->calculated_close = $calculated_close;
-
-                if ($lconvert == 1)
-                {
-                    $total_open = $class['total_open'] * -1;
-                    $total_period = $class['total_period'] * -1;
-                }
 
                 $topen = $class['equity_open'] * $class['econvert'] + $class['liability_open'] * $class['lconvert'] + $calculated_open;
                 $tperiod = $class['equity_period'] * $class['econvert'] + $class['liability_period'] * $class['lconvert'] + $calculated_period;
@@ -395,6 +420,70 @@ class General_Ledger_Report extends Mobile_Report {
 
     function gl_account_transactions() {
 
+        global $comp_path, $path_to_root;
+
+        $this->accounts = $this->get_chart_account();
+
+        if($_POST) {
+
+            $from       = $this->get_date($_POST['stgl'], $_POST['sbln'], $_POST['sthn']);
+            $to         = $this->get_date($_POST['etgl'], $_POST['ebln'], $_POST['ethn']);
+            $fiscal     = $this->get_current_fiscal();
+            $facc       = $_POST['facc'];
+            $tacc       = $_POST['tacc'];
+            $account    = $facc." - ".$tacc;
+
+            $this->from     = $from;
+            $this->to       = $to;
+            $this->fiscal   = $fiscal;
+            $this->account  = $account;
+
+            $this->gl = $this->get_gl_trans($from, $to, $facc, $tacc);
+
+            $this->view = 'mobile_reporting/general_ledger_report/gl_account_trans_report';
+
+        }
+
+    }
+
+    function get_gl_trans($from, $to, $facc, $tacc) {
+
+        $accounts = array();
+
+        $result = get_gl_accounts($facc, $tacc);
+        while ($row = db_fetch($result)) {
+
+            if (is_account_balancesheet($row["account_code"]))
+                $begin = "";
+            else
+            {
+                $begin = begin_fiscalyear();
+                if (date1_greater_date2($begin, $from))
+                    $begin = $from;
+                $begin = add_days($begin, -1);
+            }
+
+            $prev_balance = get_gl_balance_from_to($begin, $from, $row["account_code"]);
+            $trans = get_gl_transactions($from, $to, -1, $row['account_code']);
+            $rows = db_num_rows($trans);
+            if ($prev_balance == 0.0 && $rows == 0)
+                continue;
+
+            $account['type'] = $row['account_code'] . " " . $row['account_name'];
+
+            $account['debit'] = $account['credit'] = "";
+
+            if ($prev_balance > 0.0)
+                $account['debit'] = abs($prev_balance);
+            else
+                $account['credit'] = abs($prev_balance);
+
+            $accounts[] = $account;
+
+        }
+
+        return $accounts;
+
     }
 
     function profit_loss_statement() {
@@ -407,14 +496,15 @@ class General_Ledger_Report extends Mobile_Report {
             $from       = $this->get_date($_POST['stgl'], $_POST['sbln'], $_POST['sthn']);
             $to         = $this->get_date($_POST['etgl'], $_POST['ebln'], $_POST['ethn']);
             $fiscal     = $this->get_current_fiscal();
-            $compares   = $this->get_compare($from, $to, $_POST['compare']);
+            $compare    = $_POST['compare'];
+            $compare_to = $this->get_compare_to($from, $to, $compare);
 
-            $this->from     = $from;
-            $this->to       = $to;
-            $this->fiscal   = $fiscal;
-            $this->compares = $compares;
+            $this->from         = $from;
+            $this->to           = $to;
+            $this->fiscal       = $fiscal;
+            $this->compare_to   = $compare_to;
 
-            $this->classes = $this->get_classes($from, $to, "0", $compares);
+            $this->classes = $this->get_classes($from, $to, $compare_to['begin'], $compare_to['end'], "0", $compare);
 
             foreach($this->classes as $class) {
 

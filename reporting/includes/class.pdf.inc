@@ -116,7 +116,7 @@ class Cpdf extends TCPDF {
 					case "ar_EG" : 	$fontname = "ae_tholoth"; 	break;
 					case "zh_CN" : 	$fontname = "gbsn00lp"; 	break;
 					case "zh_TW" : 	$fontname = "chinese_traditional_cid0"; 	break;
-					default :      	$fontname = "dejavu"; 		break;
+					default :      	$fontname = "helvetica"; 		break;
 				}
 			}
 			elseif ($this->encoding === "ISO-8859-2")
